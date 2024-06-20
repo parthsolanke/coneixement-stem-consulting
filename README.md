@@ -73,7 +73,7 @@ We welcome contributions! Please see our [Contributing Guidelines](docs/contribu
 ### Useful Links
 
 - [Requirements Document](docs/requirements.md)
-- [Project Management Board](https://trello.com/b/your-board-link)
+- [Project Management Board](https://trello.com/b/RH2DBTCS)
 
 ## License
 
