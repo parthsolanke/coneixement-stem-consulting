@@ -9,7 +9,8 @@ coneixement-STEM-consulting/
 │   └── feature_request.md  
 ├── docs/
 │   ├── requirements.md
-│   └── contributing.md
+│   ├── contributing.md
+│   └── code_of_conduct.md
 ├── src/
 │   ├── __init__.py
 │   ├── main.py
