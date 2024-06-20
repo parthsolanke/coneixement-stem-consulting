@@ -1,4 +1,4 @@
 pytest
-flask
+fastapi
 pandas
 numpy

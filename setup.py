@@ -1,12 +1,12 @@
 from setuptools import setup, find_packages
 
 setup(
-    name='STEM-Pathfinder',
+    name='coneixement-STEM-consulting',
     version='0.1',
     packages=find_packages(where='src'),
     package_dir={'': 'src'},
     install_requires=[
-        'flask',
+        'fastapi',
         'pandas',
         'numpy',
     ],
