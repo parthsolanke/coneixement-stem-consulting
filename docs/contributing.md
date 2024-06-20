@@ -73,5 +73,5 @@ If you need any help or have questions, feel free to reach out by creating an is
 ## Additional Resources
 
 - [Requirements Document](./requirements.md)
-- [Project Management Board](https://trello.com/b/your-board-link)
+- [Project Management Board](https://trello.com/b/RH2DBTCS)
 - [GitHub Issues](https://github.com/parthsolanke/coneixement-STEM-consulting/issues)
