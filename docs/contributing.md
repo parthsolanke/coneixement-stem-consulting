@@ -1,12 +1,12 @@
 ### Contributing Guidelines
 
-Thank you for considering contributing to STEM Pathfinder! We welcome contributions from everyone. Here are some guidelines to help you get started.
+Thank you for considering contributing to coneixement-STEM-consulting! We welcome contributions from everyone. Here are some guidelines to help you get started.
 
 ## How to Contribute
 
 ### 1. Reporting Issues
 
-If you find a bug or have a feature request, please create an issue in our [GitHub Issues](https://github.com/yourusername/STEM-Pathfinder/issues) section. Make sure to include:
+If you find a bug or have a feature request, please create an issue in our [GitHub Issues](https://github.com/parthsolanke/coneixement-STEM-consulting/issues) section. Make sure to include:
 
 - A clear and descriptive title.
 - A detailed description of the issue or feature request.
@@ -74,4 +74,4 @@ If you need any help or have questions, feel free to reach out by creating an is
 
 - [Requirements Document](./requirements.md)
 - [Project Management Board](https://trello.com/b/your-board-link)
-- [GitHub Issues](https://github.com/yourusername/STEM-Pathfinder/issues)
+- [GitHub Issues](https://github.com/parthsolanke/coneixement-STEM-consulting/issues)
