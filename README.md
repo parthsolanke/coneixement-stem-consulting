@@ -6,28 +6,44 @@ A comprehensive tool to guide students in grades 8-12 towards suitable STEM care
 ```
 coneixement-STEM-consulting/
 ├── .github/
-│   └── feature_request.md  
+│   └── ISSUE_TEMPLATE/
+│       └── feature_request.md  
 ├── docs/
 │   ├── requirements.md
 │   ├── contributing.md
 │   └── code_of_conduct.md
-├── src/
+├── backend/
 │   ├── __init__.py
 │   ├── main.py
 │   ├── quiz/
 │   │   ├── __init__.py
-│   │   ├── # quiz modules
+│   │   ├── aptitude.py
+│   │   ├── personality.py
 │   ├── report/
 │   │   ├── __init__.py
 │   │   └── generate_report.py
 │   └── utils/
 │       ├── __init__.py
-│       └── # utility modules
+│       └── helpers.py
+├── frontend/
+│   ├── public/
+│   │   └── # public files
+│   ├── src/
+│   │   ├── components/
+│   │   │   └── # React components
+│   │   ├── styles/
+│   │   │   └── # CSS/SCSS files
+│   │   ├── App.js
+│   │   ├── index.js
+│   │   └── # other frontend modules
+│   ├── package.json
+│   └── # other configuration files
 ├── tests/
 │   ├── __init__.py
-│   ├── # personality quiz test modules
+│   ├── test_aptitude.py
+│   ├── test_personality.py
 │   ├── test_report.py
-│   ├── # utility test modules
+│   └── test_helpers.py
 ├── .gitignore
 ├── README.md
 ├── requirements.txt
