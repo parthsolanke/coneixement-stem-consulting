@@ -17,14 +17,13 @@ coneixement-STEM-consulting/
 │   ├── main.py
 │   ├── quiz/
 │   │   ├── __init__.py
-│   │   ├── aptitude.py
-│   │   ├── personality.py
+│   │   └──  # quiz modules
 │   ├── report/
 │   │   ├── __init__.py
 │   │   └── generate_report.py
 │   └── utils/
 │       ├── __init__.py
-│       └── helpers.py
+│       └── # utility modules
 ├── frontend/
 │   ├── public/
 │   │   └── # public files
@@ -40,10 +39,9 @@ coneixement-STEM-consulting/
 │   └── # other configuration files
 ├── tests/
 │   ├── __init__.py
-│   ├── test_aptitude.py
-│   ├── test_personality.py
+│   ├── # personality quiz test modules
 │   ├── test_report.py
-│   └── test_helpers.py
+│   └──  # utility test modules
 ├── .gitignore
 ├── README.md
 ├── requirements.txt
