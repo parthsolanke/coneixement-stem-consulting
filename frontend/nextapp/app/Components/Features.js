@@ -9,14 +9,14 @@ export default function Features() {
         </span>
 
         <div className="flex flex-col md:flex-row justify-center items-center space-y-10 md:space-y-0 mt-20">
-          <div className="flex justify-center items-center w-60 h-48 rounded-2xl text-white font-semibold text-lg mx-20 bg-red-gradient">
+          <div className="flex justify-center items-center w-60 h-48 rounded-2xl text-white font-semibold text-lg mx-20  bg-red-gradient shadow-lg transition-transform transform hover:scale-105 hover:shadow-2xl">
             <p className="text-center mx-2">
               Lorem ipsum dolor sit amet consectetur, adipisicing elit1 Lorem
               ipsum dolor sit amet.
             </p>
           </div>
 
-          <div className="flex justify-center items-center w-60 h-48 rounded-2xl text-white font-semibold text-lg mx-20 bg-blue-gradient">
+          <div className="flex justify-center items-center w-60 h-48 rounded-2xl text-white font-semibold text-lg mx-20 bg-blue-gradient shadow-lg transition-transform transform hover:scale-105 hover:shadow-2xl">
             <p className="text-center mx-2">
               Lorem ipsum dolor sit amet consectetur, adipisicing elit3 Lorem
               ipsum dolor sit amet.
@@ -25,7 +25,7 @@ export default function Features() {
         </div>
 
         <div className="flex flex-col md:flex-row justify-center items-center mt-10 space-y-10 md:space-y-0">
-          <div className="flex justify-center items-center w-60 h-48 rounded-2xl text-white font-semibold text-lg mx-4 md:mx-28 bg-orange-gradient">
+          <div className="flex justify-center items-center w-60 h-48 rounded-2xl text-white font-semibold text-lg mx-4 md:mx-28 bg-orange-gradient shadow-lg transition-transform transform hover:scale-105 hover:shadow-2xl">
             <p className="text-center mx-2">
               Lorem ipsum dolor sit amet consectetur, adipisicing elit3 Lorem
               ipsum dolor sit amet.
@@ -42,7 +42,7 @@ export default function Features() {
               height={100}
             />
           </div>
-          <div className="flex justify-center items-center w-60 h-48 rounded-2xl text-white font-semibold text-lg mx-4 md:mx-28 bg-purple-gradient">
+          <div className="flex justify-center items-center w-60 h-48 rounded-2xl text-white font-semibold text-lg mx-4 md:mx-28 bg-purple-gradient shadow-lg transition-transform transform hover:scale-105 hover:shadow-2xl">
             <p className="text-center mx-2">
               Lorem ipsum dolor sit amet consectetur, adipisicing elit4 Lorem
               ipsum dolor sit amet.
