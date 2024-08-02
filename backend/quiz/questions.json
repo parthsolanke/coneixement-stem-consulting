@@ -1,0 +1,151 @@
+{
+  "personalityQuestions": [
+    {
+      "index": 0,
+      "question": "Would you like if the position of your work desk gets slightly changed?",
+      "trait": "OPENNESS"
+    },
+    {
+      "index": 0,
+      "question": "Are you open to try bungee jumping? ",
+      "trait": "OPENNESS"
+    },
+    {
+      "index": 0,
+      "question": "Do you like and enjoy to take up and solve new challenges?",
+      "trait": "OPENNESS"
+    },
+    {
+      "index": 0,
+      "question": "Do you like the abstract thinking of children?",
+      "trait": "OPENNESS"
+    },
+    {
+      "index": 0,
+      "question": "Have you ever disassembled and assembled any thing just out of curiosity?",
+      "trait": "OPENNESS"
+    },
+    {
+      "index": 1,
+      "question": "Do you spend enough time in order to prepare for an occasion or event?",
+      "trait": "CONSCIENTIOUSNESS"
+    },
+    {
+      "index": 1,
+      "question": "Do you enjoy solving “find the mistake in the picture” quizzes?",
+      "trait": "CONSCIENTIOUSNESS"
+    },
+    {
+      "index": 1,
+      "question": "Do you like being on time a follow the schedule throughout the day? ",
+      "trait": "CONSCIENTIOUSNESS"
+    },
+    {
+      "index": 1,
+      "question": "Do you think you are a perfectionist",
+      "trait": "CONSCIENTIOUSNESS"
+    },
+    {
+      "index": 1,
+      "question": "Do you prioritize important work to do before and complete the certain task? ",
+      "trait": "CONSCIENTIOUSNESS"
+    },
+    {
+      "index": 2,
+      "question": "Do you often start conversations with strangers?",
+      "trait": "EXTRAVERSION"
+    },
+    {
+      "index": 2,
+      "question": "Do you like having wide social circle of friends and acquaintances?",
+      "trait": "EXTRAVERSION"
+    },
+    {
+      "index": 2,
+      "question": "Do you feel energized being surrounded with people?  ",
+      "trait": "EXTRAVERSION"
+    },
+    {
+      "index": 2,
+      "question": "You don’t like to give thought about what you are going to speak? ",
+      "trait": "EXTRAVERSION"
+    },
+    {
+      "index": 2,
+      "question": "Do you like being the centre of attention? g.",
+      "trait": "EXTRAVERSION"
+    },
+    {
+      "index": 3,
+      "question": "Do you care about the cries going on in our society? ",
+      "trait": "AGREEABLENESS"
+    },
+    {
+      "index": 3,
+      "question": "Do you feel empathy about the people who are below poverty line?",
+      "trait": "AGREEABLENESS"
+    },
+    {
+      "index": 3,
+      "question": "Have you ever assisted or helped the people in crisis? ",
+      "trait": "AGREEABLENESS"
+    },
+    {
+      "index": 3,
+      "question": "You don’t care about other people judging you? ",
+      "trait": "AGREEABLENESS"
+    },
+    {
+      "index": 3,
+      "question": "Do you enjoy making other people happy? ",
+      "trait": "AGREEABLENESS"
+    },
+    {
+      "index": 4,
+      "question": "Do you go through a lot of stress in certain conditions?",
+      "trait": "NEUROTICISM"
+    },
+    {
+      "index": 4,
+      "question": "There are dramatic shifts in your mood?",
+      "trait": "NEUROTICISM"
+    },
+    {
+      "index": 4,
+      "question": "You often get upset? ",
+      "trait": "NEUROTICISM"
+    },
+    {
+      "index": 4,
+      "question": "You fee anxious a lot? ",
+      "trait": "NEUROTICISM"
+    },
+    {
+      "index": 4,
+      "question": "You struggle to get normal after a stressful event? ",
+      "trait": "NEUROTICISM"
+    }
+  ],
+  "markingScheme": {
+    "1": {
+      "score": 0,
+      "description": "Strongly Disagree"
+    },
+    "2": {
+      "score": 0.25,
+      "description": "Disagree"
+    },
+    "3": {
+      "score": 0.5,
+      "description": "Neutral"
+    },
+    "4": {
+      "score": 0.75,
+      "description": "Agree"
+    },
+    "5": {
+      "score": 1,
+      "description": "Strongly Agree"
+    }
+  }
+}
