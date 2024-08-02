@@ -1,19 +1,23 @@
-import Image from 'next/image';
+import Image from "next/image";
+import Button from "./Button";
 
 export default function Hero() {
   return (
-    <div className="grid grid-cols-10 items-center p-8 rounded-lg shadow-md bg-slate-100">
+    <div className="grid grid-cols-10 items-center p-16  shadow-md ">
       <div className="col-span-10 md:col-span-7">
-        <p className="text-4xl ms-12 text-gray-900 font-sans tracking-wide font-normal">
-          Find your Perfect STEM Career Path and turn your Passion into your Profession !
+        <p className="text-5xl ms-16 text-gray-900 font-sans tracking-wide font-semibold ">
+          Find your Perfect STEM Career <br /> Path and turn your Passion <br />{" "}
+          into your Profession ! <br />
         </p>
-        <button className="ms-12 mt-8 px-6 py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white text-lg rounded-full shadow-lg hover:from-blue-600 hover:to-purple-700 focus:outline-none">
-          START →
-        </button>
+        <p className="font-semibold text-lg mx-16 mt-4 text-gray-800">
+          <span >Click here to Start a free Career Assessment test</span>
+          <br />
+          <Button display="START →" type="normal" extra="mt-3" />
+        </p>
       </div>
       <div className="hidden md:block col-span-3 ml-8">
         <Image
-          src="/images/scolar-girl.jpg"
+          src="/Images/scholar-girl.png"
           alt="Graduate"
           width={300}
           height={300}
