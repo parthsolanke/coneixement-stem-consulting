@@ -3,7 +3,7 @@ import Image from "next/image";
 export default function Features() {
   return (
     <>
-      <section className="mt-20 mb-40">
+      <section className="mt-20 mb-20 ">
         <span className="text-5xl  text-gray-800 flex justify-center md:justify-start mx-40">
           What Do We Offer?
         </span>
