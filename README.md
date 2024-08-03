@@ -88,6 +88,7 @@ We welcome contributions! Please see our [Contributing Guidelines](docs/contribu
 
 - [Requirements Document](docs/requirements.md)
 - [Project Management Board](https://trello.com/b/RH2DBTCS)
+- [Research & LLM Pricing DOC](https://docs.google.com/document/d/12oh_KOYfNRiwGIbGumEch-Kf-gEb5R6nJgYuz92nQL8/edit)
 
 ## License
 
