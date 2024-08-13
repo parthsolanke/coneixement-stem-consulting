@@ -3,7 +3,7 @@ import Button from "./Button";
 
 export default function Hero() {
   return (
-    <div className="grid grid-cols-10 items-center p-16  shadow-md ">
+    <div className="grid grid-cols-10 items-center p-16  shadow-md mt-20">
       <div className="col-span-10 md:col-span-7">
         <p className="text-5xl ms-16 text-gray-900 font-sans tracking-wide font-semibold ">
           Find your Perfect STEM Career <br /> Path and turn your Passion <br />{" "}

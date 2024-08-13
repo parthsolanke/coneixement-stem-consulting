@@ -1,7 +1,7 @@
 export default function Footer() {
   return (
-    <footer className="bg-gray-800 text-white py-8 px-10">
-      <div className="container mx-auto flex flex-col md:flex-row justify-between items-center px-6 m-10">
+    <footer className="bg-gray-800 text-white py-1 px-2">
+      <div className="container mx-auto flex flex-col md:flex-row justify-between items-center px-2 m-6">
         <link
           rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
@@ -30,7 +30,7 @@ export default function Footer() {
          {/* Address */}
          <div className="mt-4 md:mt-0 md:ml-4">
           <p className="text-white">Visit Us:</p>
-          <div className="mt-2 md:mb-5 md">
+          <div className="mt-3 md:mb-5 md">
             <iframe
               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d242118.17006032463!2d73.69815383080004!3d18.524545039677417!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc295e20bba8f0f%3A0x9432569ab01c7934!2sConeixement%20India!5e0!3m2!1sen!2sus!4v1722621273747!5m2!1sen!2sus"
               width="250"
