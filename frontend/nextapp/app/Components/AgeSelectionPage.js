@@ -2,17 +2,18 @@ import Button from "./Button";
 
 function App() {
     return (
-        <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
+        <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 pt-40">
             <h2 className="text-5xl mb-20 font-bold">Select Your Age Group</h2>
 
             {/* First Div */}
             <div className="border-2 rounded-lg p-6 w-full max-w-6xl flex items-center justify-between mb-6">
-                <img
-                    src="/Images/8th_class.jpeg"
-                    alt="Graduate"
-                    style={{ width: "300px", height: "225px" }}
-                    className="rounded-2xl mr-4"
-                />
+                <div className="w-72 h-56 flex-shrink-0 mr-4">
+                    <img
+                        src="/Images/8th_class.jpeg"
+                        alt="Graduate"
+                        className="rounded-2xl w-full h-full object-cover"
+                    />
+                </div>
                 <div className="m-6 flex-1 text-lg">
                     <p className="font-bold">
                         Students in Class 8-10 (Age 13 -15)
@@ -27,12 +28,13 @@ function App() {
 
             {/* Second Div */}
             <div className="border-2 rounded-lg p-6 w-full max-w-6xl flex items-center justify-between mb-6">
-                <img
-                    src="/Images/12th_class.jpeg"
-                    alt="Graduate"
-                    style={{ width: "300px", height: "225px" }}
-                    className="rounded-2xl mr-4"
-                />
+                <div className="w-72 h-56 flex-shrink-0 mr-4">
+                    <img
+                        src="/Images/12th_class.jpeg"
+                        alt="Graduate"
+                        className="rounded-2xl w-full h-full object-cover"
+                    />
+                </div>
                 <div className="m-6 flex-1 text-lg">
                     <p className="font-bold">
                         Students in Class 11-12 (Age 16 -18)
