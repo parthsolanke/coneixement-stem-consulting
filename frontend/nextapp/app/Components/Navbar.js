@@ -30,7 +30,7 @@ export default function Navbar() {
           href="/"
           className="text-3xl font-semibold text-gray-800 my-5 transition-colors duration-300 ease-in-out hover:text-blue-600"
         >
-          Career Op
+          Coneixement
         </a>
         <input type="checkbox" id="menu-toggle" className="hidden peer" />
         <label htmlFor="menu-toggle" className="md:hidden cursor-pointer my-5">
