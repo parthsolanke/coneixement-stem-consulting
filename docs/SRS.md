@@ -1,4 +1,4 @@
-### **1 Overview**
+### **Overview**
 - **System Features**: Describes the new features in detail.
 - **System Design**: Provides an overview of the system architecture.
 - **Requirements**: Outlines functional and non-functional requirements.
