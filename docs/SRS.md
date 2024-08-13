@@ -166,12 +166,3 @@ The career path simulator allows students to explore different career trajectori
   4. Runs the simulation and views the projected career trajectory.
   5. Compares it with alternative career paths.
 - **Postcondition:** The student gains insights into the potential outcomes of different career choices.
-
----
-
-## **6. Appendices**
-
-- **A. Glossary**
-  - **Marketplace:** A platform for buying and selling educational resources.
-  - **Counselor:** A professional who provides career advice and guidance.
-  - **Simulator:** A tool that models and visualizes potential outcomes based on user input.
