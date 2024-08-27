@@ -1,5 +1,5 @@
 import Button from "./Button";
-
+import Link from "next/link";
 function App() {
     return (
         <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 pt-40">
@@ -23,7 +23,9 @@ function App() {
                         for your dream career.
                     </p>
                 </div>
+                <Link href="/quiz">
                 <Button display="Select" type="normal" extra="m-4" />
+                </Link>
             </div>
 
             {/* Second Div */}
@@ -44,7 +46,9 @@ function App() {
                         for your dream career.
                     </p>
                 </div>
+                <Link href="/quiz">
                 <Button display="Select" type="normal" extra="m-4" />
+                </Link>
             </div>
         </div>
     );
