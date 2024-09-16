@@ -1,134 +1,136 @@
-## Features
+## **Career Guidance Quiz API Documentation**
 
-1. **Retrieve All Questions**: Access all personality questions.
-2. **Filter Questions by Trait**: Retrieve questions by specific traits (e.g., OPENNESS, CONSCIENTIOUSNESS).
-3. **Assess Responses**: Compute and return the average score for each trait based on user responses.
-4. **Dynamic Question Generation (Future)**: Generate new questions using LLMs.
-5. **Dynamic Assessment (Future)**: Assess user responses using LLMs.
-6. **Utility Functions**: Placeholder functions for LLM prompt engineering and response validation.
+### **Base URL**: `/`
 
-## Endpoints
+### **Available Endpoints**:
 
-### Get All Questions
+---
 
-- **URL**: `/questions`
-- **Method**: `GET`
-- **Response**: Returns a list of all personality questions.
+### 1. **GET /**
+   - **Description**: 
+     Returns a welcome message for the API.
+   - **Request**:
+     - **Method**: `GET`
+     - **URL**: `/`
+   - **Response**:
+     - **Status Code**: `200 OK`
+     - **Content**:
+       ```json
+       {
+           "message": "Welcome to the Career Guidance Quiz API!"
+       }
+       ```
+   - **Example**:
+     ```bash
+     curl -X 'GET' 'http://127.0.0.1:8000/'
+     ```
 
-### Get Questions by Trait
+---
 
-- **URL**: `/questions/{trait}`
-- **Method**: `GET`
-- **Path Parameter**: 
-  - `trait`: The trait to filter questions by (e.g., OPENNESS, CONSCIENTIOUSNESS).
-- **Response**: Returns a list of questions filtered by the specified trait.
+### 2. **POST /quiz**
+   - **Description**: 
+     Generates a career guidance quiz and validates the response. The quiz consists of 15 questions, each associated with a specific personality trait.
+   - **Request**:
+     - **Method**: `POST`
+     - **URL**: `/quiz`
+     - **Request Body**: No input required.
+   - **Response**:
+     - **Status Code**: `200 OK` (On Success)
+     - **Content**: A JSON object containing the quiz questions.
+       ```json
+       {
+         "questions": [
+           {
+             "index": 1,
+             "question": "I enjoy trying new things and exploring different ideas.",
+             "trait": "Openness"
+           },
+           {
+             "index": 2,
+             "question": "I am always organized and on time for appointments.",
+             "trait": "Conscientiousness"
+           },
+           ...
+         ]
+       }
+       ```
+   - **Response Model**: 
+     - **Quiz**:
+       - `questions`: A list of questions where each question is an object with the following attributes:
+         - **index**: `int` - The question number.
+         - **question**: `str` - The quiz question text.
+         - **trait**: `str` - The personality trait associated with the question (e.g., Openness, Conscientiousness).
+   - **Errors**:
+     - **400 Bad Request**: If the generated quiz is invalid.
+       ```json
+       {
+         "detail": "Response must contain exactly 15 questions."
+       }
+       ```
+     - **500 Internal Server Error**: If an internal server error occurs while generating or validating the quiz.
+       ```json
+       {
+         "detail": "Internal server error message"
+       }
+       ```
+   - **Example**:
+     ```bash
+     curl -X 'POST' 'http://127.0.0.1:8000/quiz'
+     ```
 
-### Assess Responses
+---
 
-- **URL**: `/assess`
-- **Method**: `POST`
-- **Request Body**: 
-  ```json
-  {
-    "responses": [
-      {
-        "index": 0,
-        "answer": 5
-      },
-      {
-        "index": 1,
-        "answer": 4
-      }
-    ]
-  }
-  ```
-- **Response**: Returns average scores for each trait.
+### **Models**:
 
-### Generate Questions using LLM (Future)
+1. **Quiz**:
+   - **questions**: List of `Question` objects.
 
-- **URL**: `/llm/generate-questions`
-- **Method**: `POST`
-- **Request Body**:
-  ```json
-  {
-    "prompt": "Generate questions for trait OPENNESS"
-  }
-  ```
-- **Response**: Returns a list of dynamically generated questions.
+2. **Question**:
+   - **index**: `int` - The position of the question in the quiz.
+   - **question**: `str` - The quiz question text.
+   - **trait**: `str` - The personality trait the question is assessing (Openness, Conscientiousness, Extraversion, Agreeableness, Neuroticism).
 
-### Assess Responses using LLM (Future)
+---
 
-- **URL**: `/llm/assess`
-- **Method**: `POST`
-- **Request Body**: 
-  ```json
-  {
-    "responses": [
-      {
-        "index": 0,
-        "answer": 5
-      },
-      {
-        "index": 1,
-        "answer": 4
-      }
-    ]
-  }
-  ```
-- **Response**: Returns assessment results processed by LLM.
+### **Error Handling**:
 
-## Future Work
+- **400 Bad Request**: Indicates that there was an issue with the generated quiz or invalid data was found.
+- **500 Internal Server Error**: Occurs when there is an issue processing the quiz, such as when an exception is raised during quiz generation or validation.
 
-- **Integration with LLM APIs**: Replace placeholder functions with actual LLM API calls for dynamic question generation and response assessment.
-- **Advanced Validation and Checks**: Implement comprehensive validation and error handling for LLM responses.
+---
 
-## Example Usage
+### **Example Usage**:
 
-### Get All Questions
+#### 1. **GET Welcome Message**:
 ```bash
-curl -X 'GET' 'http://127.0.0.1:8000/questions' -H 'accept: application/json'
+curl -X GET 'http://127.0.0.1:8000/'
+```
+Response:
+```json
+{
+  "message": "Welcome to the Career Guidance Quiz API!"
+}
 ```
 
-### Get Questions by Trait
+#### 2. **POST Generate Quiz**:
 ```bash
-curl -X 'GET' 'http://127.0.0.1:8000/questions/OPENNESS' -H 'accept: application/json'
+curl -X POST 'http://127.0.0.1:8000/quiz'
 ```
-
-### Assess Responses
-```bash
-curl -X 'POST' 'http://127.0.0.1:8000/assess' -H 'accept: application/json' -H 'Content-Type: application/json' -d '{
-  "responses": [
-    {
-      "index": 0,
-      "answer": 5
-    },
-    {
-      "index": 1,
-      "answer": 4
-    }
-  ]
-}'
-```
-
-### Generate Questions using LLM (Future)
-```bash
-curl -X 'POST' 'http://127.0.0.1:8000/llm/generate-questions' -H 'accept: application/json' -H 'Content-Type: application/json' -d '{
-  "prompt": "Generate questions for trait OPENNESS"
-}'
-```
-
-### Assess Responses using LLM (Future)
-```bash
-curl -X 'POST' 'http://127.0.0.1:8000/llm/assess' -H 'accept: application/json' -H 'Content-Type: application/json' -d '{
-  "responses": [
-    {
-      "index": 0,
-      "answer": 5
-    },
+Response (Success):
+```json
+{
+  "questions": [
     {
       "index": 1,
-      "answer": 4
-    }
+      "question": "I enjoy trying new things and exploring different ideas.",
+      "trait": "Openness"
+    },
+    {
+      "index": 2,
+      "question": "I am always organized and on time for appointments.",
+      "trait": "Conscientiousness"
+    },
+    ...
   ]
-}'
+}
 ```
