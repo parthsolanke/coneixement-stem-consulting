@@ -1,0 +1,29 @@
+# quiz/quiz_utils.py
+import json
+from utils.llm_utils import call_gemini_with_context
+
+def generate_quiz() -> dict:
+    response = call_gemini_with_context("Generate a new quiz for career guidance")
+    return json.loads(response)
+
+def validate_quiz(data: dict) -> tuple[bool, str]:
+    if not isinstance(data, dict):
+        return False, "Response must be a dictionary."
+    if 'questions' not in data:
+        return False, "Response must contain 'questions' key."
+    questions = data['questions']
+    if not isinstance(questions, list) or len(questions) != 15:
+        return False, "Response must contain exactly 15 questions."
+    for question in questions:
+        if not isinstance(question, dict):
+            return False, "Each question must be a dictionary."
+        if 'index' not in question or 'question' not in question or 'trait' not in question:
+            return False, "Each question must contain 'index', 'question', and 'trait'."
+        if not isinstance(question['index'], int):
+            return False, "The 'index' must be an integer."
+        if not isinstance(question['question'], str):
+            return False, "The 'question' must be a string."
+        if not isinstance(question['trait'], str):
+            return False, "The 'trait' must be a string."
+    return True, "Response is valid."
+
