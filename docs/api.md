@@ -1,29 +1,8 @@
 ## **Career Guidance Quiz API Documentation**
 
-### **Base URL**: `/`
+### **Base URL**: `/api`
 
 ### **Available Endpoints**:
-
----
-
-### 1. **GET /**
-   - **Description**: 
-     Returns a welcome message for the API.
-   - **Request**:
-     - **Method**: `GET`
-     - **URL**: `/`
-   - **Response**:
-     - **Status Code**: `200 OK`
-     - **Content**:
-       ```json
-       {
-           "message": "Welcome to the Career Guidance Quiz API!"
-       }
-       ```
-   - **Example**:
-     ```bash
-     curl -X 'GET' 'http://127.0.0.1:8000/'
-     ```
 
 ---
 
@@ -32,7 +11,7 @@
      Generates a career guidance quiz and validates the response. The quiz consists of 15 questions, each associated with a specific personality trait.
    - **Request**:
      - **Method**: `POST`
-     - **URL**: `/quiz`
+     - **URL**: `/api/quiz`
      - **Request Body**: No input required.
    - **Response**:
      - **Status Code**: `200 OK` (On Success)
@@ -75,20 +54,8 @@
        ```
    - **Example**:
      ```bash
-     curl -X 'POST' 'http://127.0.0.1:8000/quiz'
+     curl -X 'POST' 'http://127.0.0.1:8000/api/quiz'
      ```
-
----
-
-### **Models**:
-
-1. **Quiz**:
-   - **questions**: List of `Question` objects.
-
-2. **Question**:
-   - **index**: `int` - The position of the question in the quiz.
-   - **question**: `str` - The quiz question text.
-   - **trait**: `str` - The personality trait the question is assessing (Openness, Conscientiousness, Extraversion, Agreeableness, Neuroticism).
 
 ---
 
@@ -101,20 +68,9 @@
 
 ### **Example Usage**:
 
-#### 1. **GET Welcome Message**:
+#### 1. **POST Generate Quiz**:
 ```bash
-curl -X GET 'http://127.0.0.1:8000/'
-```
-Response:
-```json
-{
-  "message": "Welcome to the Career Guidance Quiz API!"
-}
-```
-
-#### 2. **POST Generate Quiz**:
-```bash
-curl -X POST 'http://127.0.0.1:8000/quiz'
+curl -X POST 'http://127.0.0.1:8000/api/quiz'
 ```
 Response (Success):
 ```json

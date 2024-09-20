@@ -1,5 +1,5 @@
 # utils/context.py
-CONTEXT = [
+QUIZ_CONTEXT = [
     {
         "role": "user",
         "parts": [

@@ -1,14 +1,13 @@
 # utils/llm_utils.py
 import os
 import json
-from pathlib import Path
 from typing import Tuple
 from utils.models import Quiz
-from utils.context import CONTEXT
+from utils.context import QUIZ_CONTEXT
 from dotenv import load_dotenv
 import google.generativeai as genai
 
-env_path = Path(__file__).resolve().parent.parent.parent / ".env"
+env_path = os.path.join(os.path.dirname(__file__), '..', '.env')
 load_dotenv(dotenv_path=env_path)
 
 # env vars
@@ -59,7 +58,7 @@ model = genai.GenerativeModel(
         response_schema=Quiz
     )
 )
-gemini_chat_session = model.start_chat(history=CONTEXT)
+gemini_chat_session = model.start_chat(history=QUIZ_CONTEXT)
 
 def call_gemini_with_context(query: str) -> str:
     try:
@@ -109,9 +108,4 @@ def validate_quiz_response(response: str) -> Tuple[bool, str]:
         return False, "Response is not valid JSON."
     except Exception as e:
         return False, f"Validation error: {str(e)}"
-    
-if __name__ == "__main__":
-    response = call_gemini_with_context("Generate a new quiz for career guidance")
-    print(validate_quiz_response(response))
-    print(response)
     
