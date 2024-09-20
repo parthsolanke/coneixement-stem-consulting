@@ -1,10 +1,4 @@
-from fastapi import FastAPI
+from server import app
 from mangum import Mangum
-
-app = FastAPI()
-
-@app.get("/")
-async def root():
-    return {"message": "Hello World from FastAPI on Vercel"}
 
 handler = Mangum(app)
