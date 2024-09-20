@@ -1,45 +1,60 @@
+"use client";
+import { useEffect, useState } from "react";
 
-"use client"; // This tells Next.js that this is a Client Component
-
-import React, { useState } from 'react';
+const options = ["Strongly Agree", "Agree", "Disagree", "Strongly Disagree"];
 
 const QuizPage = () => {
-  const [selectedOption, setSelectedOption] = useState(null);
+  const [quizData, setQuizData] = useState(null);
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const [answers, setAnswers] = useState([]);
 
-  // Options array (can be empty)
-  const options = []; // Replace this with actual options when available
+  useEffect(() => {
+    const query = new URLSearchParams(window.location.search);
+    const data = query.get('data');
 
-  const handleOptionClick = (option) => {
-    setSelectedOption(option);
+    if (data) {
+      setQuizData(JSON.parse(decodeURIComponent(data)));
+    }
+  }, []);
+
+  const handleAnswerSelect = (answer) => {
+    setAnswers((prev) => {
+      const newAnswers = [...prev];
+      newAnswers[currentQuestionIndex] = answer;
+      return newAnswers;
+    });
+
+    if (currentQuestionIndex < quizData.questions.length - 1) {
+      setCurrentQuestionIndex((prev) => prev + 1);
+    } else {
+      console.log("Quiz completed:", answers);
+      // use navigate to results or handle it as needed
+    }
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100">
-      <div className="bg-white rounded-lg shadow-lg p-8 max-w-lg w-full border border-purple-300">
-        <h2 className="text-2xl font-semibold mb-4">Question 1:</h2>
-        <p className="text-gray-700 mb-6">
-          Lorem ipsum dolor sit amet. Ad quis quae in facere mollitia vel maiores soluta ad quae repellendus?
-        </p>
-        <div className="space-y-4">
-          {/* Check if options are available, else render "Lorem" text */}
-          {(options.length > 0 ? options : ['Lorem', 'Lorem', 'Lorem', 'Lorem']).map((option, index) => (
-            <button
-              key={index}
-              className={`w-full py-3 rounded-lg text-white font-semibold transition-colors ${
-                selectedOption === option ? 'bg-blue-600' : 'bg-blue-400 hover:bg-blue-500'
-              }`}
-              onClick={() => handleOptionClick(option)}
-            >
-              {option}
-            </button>
-          ))}
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
+      {quizData ? (
+        <div className="flex flex-col items-center border-2 rounded-lg p-6 w-full max-w-md shadow-sm">
+          <h3 className="text-xl mb-4 text-center">{quizData.questions[currentQuestionIndex].question}</h3>
+          <div className="flex flex-col w-full">
+            {options.map((option) => (
+              <button
+                key={option}
+                className="my-2 p-2 bg-blue-500 text-white rounded-lg w-full"
+                onClick={() => handleAnswerSelect(option)}
+              >
+                {option}
+              </button>
+            ))}
+          </div>
+          <p className="mt-4 text-center">
+            Question {currentQuestionIndex + 1} of {quizData.questions.length}
+          </p>
         </div>
-        <div className="flex justify-end mt-8">
-          <button className="flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white px-6 py-2 rounded-lg">
-            Next <span>&rarr;</span>
-          </button>
-        </div>
-      </div>
+      ) : (
+        <p>Loading Quiz...</p>
+      )}
     </div>
   );
 };
