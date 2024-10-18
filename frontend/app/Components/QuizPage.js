@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
+import Navbar from "./Navbar";
 
 const options = ["Strongly Agree", "Agree", "Disagree", "Strongly Disagree"];
 
@@ -33,7 +34,9 @@ const QuizPage = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
+   <>
+   <Navbar/>
+   <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
       {quizData ? (
         <div className="flex flex-col items-center border-2 rounded-lg p-6 w-full max-w-md shadow-sm">
           <h3 className="text-xl mb-4 text-center">{quizData.questions[currentQuestionIndex].question}</h3>
@@ -56,6 +59,7 @@ const QuizPage = () => {
         <p>Loading Quiz...</p>
       )}
     </div>
+   </>
   );
 };
 

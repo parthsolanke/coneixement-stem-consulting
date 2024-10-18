@@ -9,7 +9,7 @@ export default function Testimonials() {
                 1,569 people have said how good Career Op is
               </p>
               <h2 className="mt-4 text-3xl font-bold text-gray-900 sm:text-4xl xl:text-5xl font-pj">
-                Our happy clients say about us
+              Customer Reviews and Testimonials
               </h2>
             </div>
 

@@ -54,7 +54,7 @@ export default function Navbar() {
             <li>
               <a
                 href="/"
-                className="md:block py-2 px-3 md:my-5 text-gray-800 rounded md:bg-transparent hover:bg-gray-100 md:hover:bg-transparent md:border-0 sm:hover:text-blue-700 md:p-0 font-semibold hidden text-2xl md:text-lg transition-all duration-300 ease-in-out"
+                className="md:block py-2 px-3 md:my-5 text-gray-800 rounded md:bg-transparent hover:bg-gray-100 md:hover:bg-transparent md:border-0 sm:hover:text-blue-700 md:p-0 font-semibold hidden text-2xl md:text-lg transition-all duration-100 ease-in-out"
                 aria-current="page"
               >
                 Home
@@ -62,8 +62,16 @@ export default function Navbar() {
             </li>
             <li>
               <a
+                href="https://entechonline.com/" target="_main"
+                className="block py-2 px-3 md:my-5 text-orange-400 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 sm:hover:text-orange-600 md:p-0 font-semibold text-2xl md:text-lg transition-all duration-100 ease-in-out"
+              >
+                Explore
+              </a>
+            </li>
+            <li>
+              <a
                 href="#"
-                className="block py-2 px-3 md:my-5 text-gray-800 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 sm:hover:text-blue-700 md:p-0 font-semibold text-2xl md:text-lg transition-all duration-300 ease-in-out"
+                className="block py-2 px-3 md:my-5 text-gray-800 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 sm:hover:text-blue-700 md:p-0 font-semibold text-2xl md:text-lg transition-all duration-100 ease-in-out"
               >
                 Blogs
               </a>
@@ -71,7 +79,7 @@ export default function Navbar() {
             <li>
               <a
                 href="#"
-                className="block py-2 px-3 md:my-5 text-gray-800 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 sm:hover:text-blue-700 md:p-0 font-semibold text-2xl md:text-lg transition-all duration-300 ease-in-out"
+                className="block py-2 px-3 md:my-5 text-gray-800 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 sm:hover:text-blue-700 md:p-0 font-semibold text-2xl md:text-lg transition-all duration-100 ease-in-out"
               >
                 About Us
               </a>
@@ -79,7 +87,7 @@ export default function Navbar() {
             <li>
               <a
                 href="#"
-                className="block py-2 px-3 md:my-5 text-gray-800 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 sm:hover:text-blue-700 md:p-0 font-semibold text-2xl md:text-lg transition-all duration-300 ease-in-out"
+                className="block py-2 px-3 md:my-5 text-gray-800 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 sm:hover:text-blue-700 md:p-0 font-semibold text-2xl md:text-lg transition-all duration-100 ease-in-out"
               >
                 Contact
               </a>

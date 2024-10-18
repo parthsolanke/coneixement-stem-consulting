@@ -11,15 +11,13 @@ export default function Features() {
         <div className="flex flex-col md:flex-row justify-center items-center space-y-10 md:space-y-0 mt-20">
           <div className="flex justify-center items-center w-60 h-48 rounded-2xl text-white font-semibold text-lg mx-20  bg-red-gradient shadow-lg transition-transform transform hover:scale-105 hover:shadow-2xl">
             <p className="text-center mx-2">
-              Lorem ipsum dolor sit amet consectetur, adipisicing elit1 Lorem
-              ipsum dolor sit amet.
+            Combined aptitude and personal assessments for understanding the student's abilities and interests.
             </p>
           </div>
 
           <div className="flex justify-center items-center w-60 h-48 rounded-2xl text-white font-semibold text-lg mx-20 bg-blue-gradient shadow-lg transition-transform transform hover:scale-105 hover:shadow-2xl">
             <p className="text-center mx-2">
-              Lorem ipsum dolor sit amet consectetur, adipisicing elit3 Lorem
-              ipsum dolor sit amet.
+            Providing informative articles, tips, and resources on STEM topics and career development.
             </p>
           </div>
         </div>
@@ -27,8 +25,7 @@ export default function Features() {
         <div className="flex flex-col md:flex-row justify-center items-center mt-10 space-y-10 md:space-y-0">
           <div className="flex justify-center items-center w-60 h-48 rounded-2xl text-white font-semibold text-lg mx-4 md:mx-28 bg-orange-gradient shadow-lg transition-transform transform hover:scale-105 hover:shadow-2xl">
             <p className="text-center mx-2">
-              Lorem ipsum dolor sit amet consectetur, adipisicing elit3 Lorem
-              ipsum dolor sit amet.
+            Detailed analysis of scores, strengths, weaknesses, and suggested careers.
             </p>
           </div>
 
@@ -44,8 +41,7 @@ export default function Features() {
           </div>
           <div className="flex justify-center items-center w-60 h-48 rounded-2xl text-white font-semibold text-lg mx-4 md:mx-28 bg-purple-gradient shadow-lg transition-transform transform hover:scale-105 hover:shadow-2xl">
             <p className="text-center mx-2">
-              Lorem ipsum dolor sit amet consectetur, adipisicing elit4 Lorem
-              ipsum dolor sit amet.
+            Empowering students to make informed decisions about their career paths based on their strengths.
             </p>
           </div>
         </div>
