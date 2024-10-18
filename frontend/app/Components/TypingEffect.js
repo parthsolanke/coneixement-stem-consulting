@@ -1,66 +1,50 @@
 "use client";
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useLayoutEffect } from "react";
 
 const useTypewriter = (text, speed = 40) => {
-  const [displayText, setDisplayText] = useState('');
+  const [displayText, setDisplayText] = useState("");
 
   useEffect(() => {
     let i = 0;
     const typingInterval = setInterval(() => {
       if (i < text.length) {
-        if(i === 0) setDisplayText(prevText => prevText + text.charAt(i));
-        setDisplayText(prevText => prevText + text.charAt(i));
+        setDisplayText((prevText) => prevText + text.charAt(i));
         i++;
       } else {
         clearInterval(typingInterval);
       }
     }, speed);
 
-    return () => {
-      clearInterval(typingInterval);
-    };
+    return () => clearInterval(typingInterval);
   }, [text, speed]);
 
   return displayText;
 };
 
-const Typewriter = ({ text, speed }) => {
+const Typewriter = ({ text, speed = 40 }) => {
   const displayText = useTypewriter(text, speed);
-  const [minHeight, setMinHeight] = useState(null);
+  const [minHeight, setMinHeight] = useState(0);
   const fullTextRef = useRef(null);
 
-  // Measure full text height after applying identical styling with padding and margin
-  useEffect(() => {
+  // Measure the full text height using useLayoutEffect to ensure DOM is ready
+  useLayoutEffect(() => {
     if (fullTextRef.current) {
-      const computedStyles = getComputedStyle(fullTextRef.current);
-      const height = fullTextRef.current.offsetHeight;
-      const paddingTop = parseFloat(computedStyles.paddingTop);
-      const paddingBottom = parseFloat(computedStyles.paddingBottom);
-      const marginTop = parseFloat(computedStyles.marginTop);
-      const marginBottom = parseFloat(computedStyles.marginBottom);
-      const totalHeight = height + paddingTop + paddingBottom + marginTop + marginBottom;
-
+      const totalHeight = fullTextRef.current.offsetHeight;
       setMinHeight(totalHeight);
     }
   }, [text]);
 
   return (
     <div
-      className="text-5xl ms-16 text-gray-900 font-sans tracking-wide font-semibold break-words pr-14"
+      className="relative mt-4 text-3xl font-bold text-gray-900 sm:text-4xl xl:text-5xl font-pj"
       style={{ minHeight }}
     >
       {displayText}
 
-      {/* Hidden element to measure text height with padding and margin */}
+      {/* Hidden element to measure the height */}
       <div
         ref={fullTextRef}
-        className="absolute invisible pointer-events-none text-5xl ms-16 text-gray-900 font-sans tracking-wide font-semibold break-words pr-14"
-        style={{
-          whiteSpace: 'pre-wrap',
-          visibility: 'hidden',
-          position: 'absolute',
-          boxSizing: 'border-box',  // Ensures padding is included in measurements
-        }}
+        className="invisible absolute whitespace-pre-wrap text-3xl sm:text-4xl xl:text-5xl font-pj font-semibold tracking-wide"
         aria-hidden="true"
       >
         {text}
