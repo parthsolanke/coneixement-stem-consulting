@@ -41,8 +41,7 @@ export default function Page() {
           <div className="m-6 flex-1 text-lg">
             <p className="font-bold">Students in Class 8-10 (Age 13 -15)</p>
             <p>
-              Decide the stream of your choice and plan the next steps for your
-              dream career.
+            Start exploring your interests and build a strong foundation for success in the STEM field.
             </p>
           </div>
           <Button
