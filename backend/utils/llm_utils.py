@@ -1,8 +1,6 @@
 # utils/llm_utils.py
 import os
-import json
-from typing import Tuple
-from utils.models import Quiz
+from utils.models import QuizResponse
 from utils.context import QUIZ_CONTEXT
 from dotenv import load_dotenv
 import google.generativeai as genai
@@ -55,7 +53,7 @@ model = genai.GenerativeModel(
     """,
     generation_config=genai.GenerationConfig(
         response_mime_type="application/json",
-        response_schema=Quiz
+        response_schema=QuizResponse
     )
 )
 gemini_chat_session = model.start_chat(history=QUIZ_CONTEXT)
@@ -75,37 +73,4 @@ def call_gemini_without_context(query: str) -> str:
     except Exception as e:
         print(f"An error occurred: {e}")
         return ""
-
-def validate_quiz_response(response: str) -> Tuple[bool, str]:
-    try:
-        data = json.loads(response)
-        
-        if not isinstance(data, dict):
-            return False, "Response must be a dictionary."
-        
-        if 'questions' not in data:
-            return False, "Response must contain 'questions' key."
-        
-        questions = data['questions']
-        if not isinstance(questions, list) or len(questions) != 15:
-            return False, "Response must contain exactly 15 questions."
-        
-        for question in questions:
-            if not isinstance(question, dict):
-                return False, "Each question must be a dictionary."
-            if 'index' not in question or 'question' not in question or 'trait' not in question:
-                return False, "Each question must contain 'index', 'question' and 'trait'."
-            if not isinstance(question['index'], int):
-                return False, "The 'index' must be an integer."
-            if not isinstance(question['question'], str):
-                return False, "The 'question' must be a string."
-            if not isinstance(question['trait'], str):
-                return False, "The 'trait' must be a string."
-        
-        return True, "Response is valid."
-
-    except json.JSONDecodeError:
-        return False, "Response is not valid JSON."
-    except Exception as e:
-        return False, f"Validation error: {str(e)}"
     

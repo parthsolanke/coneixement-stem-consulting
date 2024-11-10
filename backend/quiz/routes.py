@@ -1,14 +1,14 @@
 # quiz/routes.py
 from fastapi import FastAPI, HTTPException
 from quiz.quiz_utils import generate_quiz, validate_quiz
-from utils.models import Quiz
+from utils.models import QuizResponse, QuizRequest
 
 app = FastAPI()
 
-@app.post("/quiz", response_model=Quiz)
-async def get_quiz():
+@app.post("/quiz", response_model=QuizResponse)
+async def get_quiz(request: QuizRequest):
     try:
-        quiz_data = generate_quiz()
+        quiz_data = generate_quiz(request.extraCurricular, request.subjects, request.age)
         valid, message = validate_quiz(quiz_data)
         if not valid:
             raise HTTPException(status_code=400, detail=message)

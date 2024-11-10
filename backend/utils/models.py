@@ -7,8 +7,13 @@ class Question(BaseModel):
     question: str
     trait: str
 
-class Quiz(BaseModel):
+class QuizResponse(BaseModel):
     questions: List[Question]
+    
+class QuizRequest(BaseModel):
+    extraCurricular: str
+    subjects: str
+    age: str
 
 class Context:
     def __init__(self):

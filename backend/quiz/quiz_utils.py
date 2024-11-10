@@ -2,8 +2,12 @@
 import json
 from utils.llm_utils import call_gemini_with_context
 
-def generate_quiz() -> dict:
-    response = call_gemini_with_context("Generate a new quiz for career guidance")
+def generate_quiz(extraCurricular: str, subjects: str, age: str) -> dict:
+    context = f"Generate a new quiz for career guidance based on the following details:\n" \
+              f"Extracurricular Interests: {extraCurricular}\n" \
+              f"Subjects of Interest: {subjects}\n" \
+              f"Age: {age}"
+    response = call_gemini_with_context(context)
     return json.loads(response)
 
 def validate_quiz(data: dict) -> tuple[bool, str]:
