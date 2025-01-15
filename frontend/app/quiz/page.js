@@ -10,6 +10,25 @@ const options = [
   { label: "Strongly Disagree", weight: 0 },
 ];
 
+const calculateMaxScorePerTrait = (questions) => {
+  const traitCounts = {};
+  questions.forEach(question => {
+    traitCounts[question.trait] = (traitCounts[question.trait] || 0) + 1;
+  });
+  // Maximum score per question is 3
+  return Object.fromEntries(
+    Object.entries(traitCounts).map(([trait, count]) => [trait, count * 3])
+  );
+};
+
+const calculateTraitPercentages = (weights, maxScores) => {
+  const percentages = {};
+  for (const trait in weights) {
+    percentages[trait] = Math.round((weights[trait] / maxScores[trait]) * 100);
+  }
+  return percentages;
+};
+
 const QuizPage = () => {
   const [quizData, setQuizData] = useState(null);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -29,9 +48,12 @@ const QuizPage = () => {
     setTraitWeights((prev) => {
       const newWeights = { ...prev };
       newWeights[trait] = (newWeights[trait] || 0) + answerWeight;
+
       if (currentQuestionIndex === quizData.questions.length - 1) {
+        const maxScores = calculateMaxScorePerTrait(quizData.questions);
+        const percentages = calculateTraitPercentages(newWeights, maxScores);
         router.push(
-          `/report?data=${encodeURIComponent(JSON.stringify(newWeights))}`
+          `/report?data=${encodeURIComponent(JSON.stringify(percentages))}`
         );
       }
 
