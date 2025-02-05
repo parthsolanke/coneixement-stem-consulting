@@ -4,7 +4,21 @@ QUIZ_CONTEXT = [
         "role": "user",
         "parts": [
             {
-                "text": "Generate a quiz for career guidance"
+                "text": """
+                        Generate a new quiz for career guidance based on the following details:
+                        Extracurricular Interests: Sports, Music, Art
+                        Subjects of Interest: History, Science
+                        Age: 19
+
+                        The quiz should be engaging, age-appropriate, and designed to help the user discover potential career paths based on their interests. 
+                        Each question should be a statement rather than a "WH" question, allowing the user to respond using the following options:
+                        - Strongly Agree
+                        - Agree
+                        - Disagree
+                        - Strongly Disagree
+
+                        Ensure that the statements reflect attitudes, preferences, or opinions related to the user's interests and career aspirations.
+                        """
             }
         ]
     },
@@ -17,81 +31,82 @@ QUIZ_CONTEXT = [
                     "questions": [
                         {
                             "index": 0,
-                            "question": "I enjoy trying new things and exploring different ideas.",
-                            "trait": "Openness"
+                            "question": "I feel most fulfilled when I am actively engaged in physical activities or sports.",
+                            "trait": "Physical Activity Preference"
                         },
                         {
                             "index": 1,
-                            "question": "I am always organized and on time for appointments.",
-                            "trait": "Conscientiousness"
+                            "question": "I often find myself imagining creative ideas or unique ways to express myself through art or music.",
+                            "trait": "Creativity & Expression"
                         },
                         {
                             "index": 2,
-                            "question": "I am outgoing and enjoy being around people.",
-                            "trait": "Extraversion"
+                            "question": "I enjoy analyzing past events and understanding how they shape the present and future.",
+                            "trait": "Historical Thinking & Analysis"
                         },
                         {
                             "index": 3,
-                            "question": "I am helpful and considerate of others' feelings.",
-                            "trait": "Agreeableness"
+                            "question": "I am fascinated by scientific discoveries and enjoy experimenting with new ideas.",
+                            "trait": "Scientific Curiosity & Innovation"
                         },
                         {
                             "index": 4,
-                            "question": "I worry a lot and am easily stressed.",
-                            "trait": "Neuroticism"
+                            "question": "I feel confident when leading a team or guiding others toward a common goal.",
+                            "trait": "Leadership & Decision-Making"
                         },
                         {
                             "index": 5,
-                            "question": "I am curious about the world and eager to learn new things.",
-                            "trait": "Openness"
+                            "question": "I naturally pay close attention to details and prefer structured tasks over flexible ones.",
+                            "trait": "Attention to Detail & Organization"
                         },
                         {
                             "index": 6,
-                            "question": "I am responsible and follow through on my commitments.",
-                            "trait": "Conscientiousness"
+                            "question": "I thrive in collaborative environments where I can work closely with others to achieve a goal.",
+                            "trait": "Teamwork & Interpersonal Skills"
                         },
                         {
                             "index": 7,
-                            "question": "I am energetic and enjoy being the center of attention.",
-                            "trait": "Extraversion"
+                            "question": "I often put myself in others' shoes and feel a strong desire to help and support people.",
+                            "trait": "Empathy & Human Connection"
                         },
                         {
                             "index": 8,
-                            "question": "I am cooperative and value harmony in relationships.",
-                            "trait": "Agreeableness"
+                            "question": "I enjoy tackling complex problems that require logical reasoning and critical thinking.",
+                            "trait": "Analytical & Problem-Solving Skills"
                         },
                         {
                             "index": 9,
-                            "question": "I am easily upset and experience mood swings.",
-                            "trait": "Neuroticism"
+                            "question": "I prefer working in environments where tasks are clearly defined, and expectations are structured.",
+                            "trait": "Preference for Stability & Structure"
                         },
                         {
                             "index": 10,
-                            "question": "I am imaginative and enjoy thinking outside the box.",
-                            "trait": "Openness"
+                            "question": "I am excited by the idea of exploring different career paths and stepping into new opportunities.",
+                            "trait": "Openness to Career Exploration"
                         },
                         {
                             "index": 11,
-                            "question": "I am detail-oriented and pay attention to deadlines.",
-                            "trait": "Conscientiousness"
+                            "question": "I feel most motivated when I set ambitious goals and strive to outperform my previous achievements.",
+                            "trait": "Ambition & Goal-Setting"
                         },
                         {
                             "index": 12,
-                            "question": "I am talkative and enjoy socializing with others.",
-                            "trait": "Extraversion"
+                            "question": "I enjoy crafting compelling narratives and communicating ideas effectively through writing.",
+                            "trait": "Communication & Storytelling"
                         },
                         {
                             "index": 13,
-                            "question": "I am empathetic and understanding of others' perspectives.",
-                            "trait": "Agreeableness"
+                            "question": "I am passionate about designing, building, or creating things with my hands.",
+                            "trait": "Hands-On Creativity & Practical Skills"
                         },
                         {
                             "index": 14,
-                            "question": "I am easily anxious and tend to overthink things.",
-                            "trait": "Neuroticism"
+                            "question": "I am curious about how people think, behave, and interact in different situations.",
+                            "trait": "Psychology & Human Behavior"
                         }
                     ]
-                }"""
+                }
+                """
             }
         ]
     }

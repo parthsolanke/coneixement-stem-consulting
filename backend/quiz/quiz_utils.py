@@ -3,10 +3,23 @@ import json
 from utils.llm_utils import call_gemini_with_context
 
 def generate_quiz(extraCurricular: str, subjects: str, age: str) -> dict:
-    context = f"Generate a new quiz for career guidance based on the following details:\n" \
-              f"Extracurricular Interests: {extraCurricular}\n" \
-              f"Subjects of Interest: {subjects}\n" \
-              f"Age: {age}"
+    context = f"""
+    Generate a new quiz for career guidance based on the following details:
+
+    Extracurricular Interests: {extraCurricular}
+    Subjects of Interest: {subjects}
+    Age: {age}
+
+    The quiz should be engaging, age-appropriate, and designed to help the user discover potential career paths based on their interests.  
+    Each question should be a statement rather than a "WH" question, allowing the user to respond using the following options:  
+    - Strongly Agree  
+    - Agree  
+    - Disagree  
+    - Strongly Disagree  
+
+    Ensure that the statements reflect attitudes, preferences, or opinions related to the user's interests and career aspirations.
+    """
+
     response = call_gemini_with_context(context)
     return json.loads(response)
 
