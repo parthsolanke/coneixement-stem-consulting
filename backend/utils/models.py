@@ -34,3 +34,71 @@ class Context:
 
     def __repr__(self) -> str:
         return f"Context({self.context_data})"
+
+class ReportRequest(BaseModel):
+    scores: Dict[str, int]
+    strengths: List[str]
+    weaknesses: List[str]
+
+class KeyCharacteristic(BaseModel):
+    title: str
+    description: str
+    key_points: List[str]
+
+class StrengthMapping(BaseModel):
+    strength: str
+    academic_fields: List[str]
+    potential_applications: str
+
+class DevelopmentPath(BaseModel):
+    area: str
+    improvement_strategies: List[str]
+    related_fields: str
+
+class EducationalPath(BaseModel):
+    field: str
+    alignment: str
+    potential_outcomes: List[str]
+
+class CareerPath(BaseModel):
+    field: str
+    why_consider: str
+    required_skills: List[str]
+    growth_potential: str
+
+class ProfileOverview(BaseModel):
+    title: str
+    description: str
+    key_characteristics: List[str]
+
+class StrengthAcademicMapping(BaseModel):
+    title: str
+    mappings: List[StrengthMapping]
+
+class GrowthAreas(BaseModel):
+    title: str
+    description: str
+    development_paths: List[DevelopmentPath]
+
+class EducationalPathways(BaseModel):
+    title: str
+    paths: List[EducationalPath]
+
+class CareerExploration(BaseModel):
+    title: str
+    paths: List[CareerPath]
+
+class ReflectionQuestions(BaseModel):
+    title: str
+    questions: List[str]
+
+class Report(BaseModel):
+    profile_overview: ProfileOverview
+    strength_academic_mapping: StrengthAcademicMapping
+    growth_areas: GrowthAreas
+    educational_pathways: EducationalPathways
+    career_exploration: CareerExploration
+    reflection_questions: ReflectionQuestions
+
+class ReportResponse(BaseModel):
+    report: Report
