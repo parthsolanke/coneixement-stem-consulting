@@ -5,10 +5,14 @@ from utils.models import QuizResponse, QuizRequest
 
 app = FastAPI()
 
-@app.post("/quiz", response_model=QuizResponse)
+@app.post("/", response_model=QuizResponse)
 async def get_quiz(request: QuizRequest):
     try:
-        quiz_data = generate_quiz(request.extraCurricular, request.subjects, request.age)
+        quiz_data = await generate_quiz(
+            request.extraCurricular,
+            request.subjects,
+            request.age
+        )
         valid, message = validate_quiz(quiz_data)
         if not valid:
             raise HTTPException(status_code=400, detail=message)
