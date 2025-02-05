@@ -111,3 +111,74 @@ QUIZ_CONTEXT = [
         ]
     }
 ]
+
+REPORT_CONTEXT = [
+    {
+        "role": "user",
+        "parts": [{
+            "text": """Generate a career guidance report for the following assessment:
+                    Trait Scores: 
+                    - Mathematical: 85
+                    - Analytical: 90
+                    - Creative: 75
+                    
+                    Strengths: ["problem-solving", "analytical thinking"]
+                    Weaknesses: ["communication", "teamwork"]"""
+        }]
+    },
+    {
+        "role": "model",
+        "parts": [{
+            "text": """{
+                "report": {
+                    "profile_overview": {
+                        "title": "Technical Problem-Solver Profile",
+                        "description": "Strong analytical capabilities with focus on mathematical and logical thinking",
+                        "key_characteristics": ["Analytical mindset", "Technical aptitude", "Independent worker"]
+                    },
+                    "strength_academic_mapping": {
+                        "title": "Academic Strengths Analysis",
+                        "mappings": [{
+                            "strength": "Analytical Thinking",
+                            "academic_fields": ["Computer Science", "Engineering", "Mathematics"],
+                            "potential_applications": "Strong foundation for technical and research roles"
+                        }]
+                    },
+                    "growth_areas": {
+                        "title": "Development Opportunities",
+                        "description": "Areas identified for professional growth",
+                        "development_paths": [{
+                            "area": "Communication Skills",
+                            "improvement_strategies": ["Join public speaking clubs", "Practice technical writing"],
+                            "related_fields": "Essential for technical leadership roles"
+                        }]
+                    },
+                    "educational_pathways": {
+                        "title": "Recommended Educational Paths",
+                        "paths": [{
+                            "field": "Computer Science",
+                            "alignment": "Matches analytical strengths",
+                            "potential_outcomes": ["Software Engineer", "Data Scientist", "Systems Architect"]
+                        }]
+                    },
+                    "career_exploration": {
+                        "title": "Potential Career Paths",
+                        "paths": [{
+                            "field": "Software Development",
+                            "why_consider": "Leverages analytical and problem-solving skills",
+                            "required_skills": ["Programming", "System Design", "Problem Solving"],
+                            "growth_potential": "High demand with continuous learning opportunities"
+                        }]
+                    },
+                    "reflection_questions": {
+                        "title": "Self-Reflection Points",
+                        "questions": [
+                            "How do you see yourself applying your analytical skills?",
+                            "What type of work environment helps you perform best?"
+                        ]
+                    }
+                }
+            }"""
+        }]
+    }
+]
