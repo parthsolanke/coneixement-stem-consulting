@@ -1,54 +1,49 @@
 "use client";
-import { useState, useEffect, useRef, useLayoutEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
-const useTypewriter = (text, speed = 40) => {
+const useTypewriter = (text, speed = 50) => {
   const [displayText, setDisplayText] = useState("");
-
+  const [isTyping, setIsTyping] = useState(true);
+  
   useEffect(() => {
-    let i = 0;
-    const typingInterval = setInterval(() => {
-      if (i < text.length) {
-        setDisplayText((prevText) => prevText + text.charAt(i));
-        i++;
+    let timeoutId;
+    let currentIndex = 0;
+    
+    const type = () => {
+      if (currentIndex <= text.length) {
+        setDisplayText(text.slice(0, currentIndex));
+        currentIndex++;
+        timeoutId = setTimeout(type, speed);
       } else {
-        clearInterval(typingInterval);
+        setIsTyping(false);
       }
-    }, speed);
+    };
 
-    return () => clearInterval(typingInterval);
+    type();
+
+    return () => {
+      clearTimeout(timeoutId);
+    };
   }, [text, speed]);
 
-  return displayText;
+  return { displayText, isTyping };
 };
 
-const Typewriter = ({ text, speed = 40 }) => {
-  const displayText = useTypewriter(text, speed);
-  const [minHeight, setMinHeight] = useState(0);
-  const fullTextRef = useRef(null);
-
-  // Measure the full text height using useLayoutEffect to ensure DOM is ready
-  useLayoutEffect(() => {
-    if (fullTextRef.current) {
-      const totalHeight = fullTextRef.current.offsetHeight;
-      setMinHeight(totalHeight);
-    }
-  }, [text]);
+const Typewriter = ({ text, speed = 50 }) => {
+  const containerRef = useRef(null);
+  const { displayText, isTyping } = useTypewriter(text, speed);
 
   return (
-    <div
-      className="relative mt-4 text-3xl font-bold text-gray-900 sm:text-4xl xl:text-5xl font-pj"
-      style={{ minHeight }}
-    >
-      {displayText}
-
-      {/* Hidden element to measure the height */}
-      <div
-        ref={fullTextRef}
-        className="invisible absolute whitespace-pre-wrap text-3xl sm:text-4xl xl:text-5xl font-pj font-semibold tracking-wide"
-        aria-hidden="true"
-      >
-        {text}
-      </div>
+    <div ref={containerRef} className="relative inline-block">
+      <span className="inherit">
+        {displayText}
+        <span 
+          className={`
+            inline-block w-0.5 h-[1em] ml-1 align-middle
+            ${isTyping ? 'animate-cursor-blink bg-current' : 'opacity-0'}
+          `}
+        />
+      </span>
     </div>
   );
 };

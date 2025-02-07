@@ -48,6 +48,7 @@ export default function Navbar() {
         bg-white/80 backdrop-blur-lg shadow-sm
         transition-all duration-300 ease-in-out
         ${showNavbar ? "translate-y-0" : "-translate-y-full"}
+        z-50
       `}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

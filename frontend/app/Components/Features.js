@@ -1,52 +1,89 @@
 import Image from "next/image";
 
+const features = [
+  {
+    title: "Smart Assessment",
+    description: "AI-powered aptitude and personality analysis to understand your unique abilities",
+    gradient: "from-violet-500 to-purple-500",
+    icon: "📊"
+  },
+  {
+    title: "Learning Resources",
+    description: "Curated STEM content, articles, and expert insights for continuous growth",
+    gradient: "from-blue-500 to-cyan-500",
+    icon: "📚"
+  },
+  {
+    title: "Career Guidance",
+    description: "Personalized career paths and recommendations based on your profile",
+    gradient: "from-pink-500 to-rose-500",
+    icon: "🎯"
+  }
+];
+
 export default function Features() {
   return (
-    <>
-      <section className="mt-10 mb-10">
-        <h2 className="text-3xl font-bold text-gray-900 sm:text-4xl xl:text-5xl font-pj flex justify-center">
-          What Do We Offer?
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* Section Header */}
+      <div className="text-center space-y-4 mb-16">
+        <span className="text-purple-600 font-semibold text-sm tracking-wider uppercase">
+          Our Features
+        </span>
+        <h2 className="text-4xl md:text-5xl font-bold text-gray-900 leading-tight">
+          What Makes Us Different?
         </h2>
+        <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+          Comprehensive tools and personalized guidance for your STEM journey
+        </p>
+      </div>
 
-        <div className="flex flex-col md:flex-row justify-center items-center space-y-10 md:space-y-0 mt-10">
-          <div className="md:w-60 h-48 rounded-2xl text-white font-semibold text-lg bg-red-gradient shadow-lg transition-transform transform hover:scale-105 hover:shadow-2xl flex justify-center items-center mx-10 md:mx-20">
-            <p className="text-center mx-4">
-              Combined aptitude and personal assessments for understanding the student's abilities and interests.
-            </p>
+      {/* Feature Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-24">
+        {features.map((feature, index) => (
+          <div
+            key={index}
+            className="group relative bg-white rounded-2xl p-8 hover:shadow-2xl transition-all duration-300 border border-gray-100"
+          >
+            <div className={`absolute inset-0 bg-gradient-to-r ${feature.gradient} opacity-0 group-hover:opacity-5 rounded-2xl transition-opacity duration-300`} />
+            <div className="space-y-4">
+              <span className="text-4xl">{feature.icon}</span>
+              <h3 className="text-xl font-bold text-gray-900">{feature.title}</h3>
+              <p className="text-gray-600 leading-relaxed">{feature.description}</p>
+            </div>
           </div>
+        ))}
+      </div>
 
-          <div className="md:w-60 h-48 rounded-2xl text-white font-semibold text-lg bg-blue-gradient shadow-lg transition-transform transform hover:scale-105 hover:shadow-2xl flex justify-center items-center mx-10 md:mx-20">
-            <p className="text-center mx-4">
-              Providing informative articles, tips, and resources on STEM topics and career development.
+      {/* Bottom Section */}
+      <div className="relative rounded-3xl overflow-hidden bg-gradient-to-r from-purple-50 to-blue-50">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center p-12">
+          <div className="space-y-6 max-w-xl">
+            <h3 className="text-3xl font-bold text-gray-900 leading-tight">
+              Your Journey to Success Starts Here
+            </h3>
+            <p className="text-lg text-gray-600">
+              Get personalized guidance and make informed decisions about your future in STEM fields.
             </p>
+            <ul className="space-y-3">
+              {["Personalized Assessment", "Expert Guidance", "Continuous Support"].map((item, i) => (
+                <li key={i} className="flex items-center space-x-3">
+                  <span className="text-green-500">✓</span>
+                  <span className="text-gray-700">{item}</span>
+                </li>
+              ))}
+            </ul>
           </div>
-        </div>
-
-        <div className="flex flex-col md:flex-row justify-center items-center mt-10 space-y-10 md:space-y-0">
-          <div className="md:w-60 h-48 rounded-2xl text-white font-semibold text-lg bg-orange-gradient shadow-lg transition-transform transform hover:scale-105 hover:shadow-2xl flex justify-center items-center mx-10 md:mx-28">
-            <p className="text-center mx-4">
-              Detailed analysis of scores, strengths, weaknesses, and suggested careers.
-            </p>
-          </div>
-
-          <div className="md:w-72 h-80 hidden md:block">
+          <div className="relative h-96 lg:h-[500px]">
             <Image
-              className="object-cover rounded-2xl mt-24"
               src="/Images/laptop-girl.jpg"
-              alt="Description"
-              layout="responsive"
-              width={100}
-              height={100}
+              alt="Student exploring career options"
+              layout="fill"
+              objectFit="cover"
+              className="rounded-xl shadow-2xl transform group-hover:scale-105 transition-transform duration-300"
             />
           </div>
-
-          <div className="md:w-60 h-48 rounded-2xl text-white font-semibold text-lg bg-purple-gradient shadow-lg transition-transform transform hover:scale-105 hover:shadow-2xl flex justify-center items-center mx-10 md:mx-28">
-            <p className="text-center mx-4">
-              Empowering students to make informed decisions about their career paths based on their strengths.
-            </p>
-          </div>
         </div>
-      </section>
-    </>
+      </div>
+    </div>
   );
 }
