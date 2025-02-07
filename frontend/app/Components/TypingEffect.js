@@ -34,16 +34,18 @@ const Typewriter = ({ text, speed = 50 }) => {
   const { displayText, isTyping } = useTypewriter(text, speed);
 
   return (
-    <div ref={containerRef} className="relative inline-block">
-      <span className="inherit">
-        {displayText}
-        <span 
-          className={`
-            inline-block w-0.5 h-[1em] ml-1 align-middle
-            ${isTyping ? 'animate-cursor-blink bg-current' : 'opacity-0'}
-          `}
-        />
-      </span>
+    <div className="h-[180px] sm:h-[144px] md:h-[180px]"> {/* Fixed height container */}
+      <div ref={containerRef} className="relative">
+        <span className="inherit">
+          {displayText}
+          <span 
+            className={`
+              inline-block w-0.5 h-[1em] ml-1 align-middle
+              ${isTyping ? 'animate-cursor-blink bg-current' : 'opacity-0'}
+            `}
+          />
+        </span>
+      </div>
     </div>
   );
 };

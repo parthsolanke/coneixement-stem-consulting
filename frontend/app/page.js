@@ -11,7 +11,7 @@ export default function Page() {
     <ErrorBoundary>
       <Navbar />
       <main className="flex-grow">
-        <section id="hero" className="relative min-h-[calc(100vh-6rem)] flex items-center"> {/* Adjusted min-height */}
+        <section id="hero" className="relative min-h-[calc(100vh-6rem)] flex items-center">
           <Hero />
         </section>
         

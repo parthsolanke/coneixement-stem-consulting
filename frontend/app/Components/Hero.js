@@ -17,8 +17,8 @@ export default function Hero() {
         <div className="relative grid grid-cols-1 md:grid-cols-12 gap-8 items-center p-8 md:p-16 max-w-7xl mx-auto h-full">
           <div className="col-span-12 md:col-span-7 space-y-8 animate-fadeIn">
 
-            {/* Main heading */}
-            <div className="space-y-4">
+            {/* Main heading with fixed dimensions */}
+            <div className="space-y-4 min-h-[240px] sm:min-h-[200px] md:min-h-[240px]">
               <h1 className="font-bold text-4xl sm:text-5xl md:text-6xl text-gray-900">
                 <Typewriter text="Take the first step towards your STEM journey!" />
               </h1>
@@ -31,7 +31,7 @@ export default function Hero() {
             <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center">
               <Link href="/ageSelect">
                 <Button 
-                  display="START FREE →" 
+                  display="START FREE" 
                   type="normal" 
                   extra="transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl"
                 />
