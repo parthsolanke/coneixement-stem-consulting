@@ -46,7 +46,7 @@ const AgeSelector = ({ ageRange, onSelect, onBack }) => {
 };
 
 const AgeGroupCard = ({ image, title, description, onSelect }) => (
-  <div className="border-2 rounded-lg p-4 w-full max-w-lg flex flex-col items-center shadow-sm hover:shadow-md transition-shadow duration-300">
+  <div className="border-2 rounded-lg p-4 w-full max-w-lg flex flex-col items-center shadow-sm hover:shadow-md transition-shadow duration-300 bg-white">
     <div className="w-full aspect-[16/9] relative overflow-hidden rounded-xl mb-4">
       <Image
         src={image}
@@ -175,7 +175,7 @@ export default function Page() {
   };
 
   return (
-    <>
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
       <Navbar />
       <div className="container mx-auto px-4 min-h-screen flex items-center justify-center relative">
         {/* Main content container */}
@@ -225,6 +225,6 @@ export default function Page() {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }
