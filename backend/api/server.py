@@ -1,7 +1,7 @@
 import uvicorn
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from middleware import event_loop_error_handler
+from middleware.error_handlers import event_loop_error_handler
 from quiz.routes import app as quiz_app
 from report.routes import app as report_app
 

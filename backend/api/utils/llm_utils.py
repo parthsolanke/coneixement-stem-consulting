@@ -3,7 +3,6 @@ from utils.models import QuizResponse
 from utils.context import QUIZ_CONTEXT, REPORT_CONTEXT
 from utils.config import GEMINI_API_KEY, MODEL
 import google.generativeai as genai
-import asyncio
 import json
 import re
 import logging
