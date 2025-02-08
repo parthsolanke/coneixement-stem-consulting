@@ -1,7 +1,7 @@
 {
   "functions": {
     "api/**/*.py": {
-      "runtime": "python3.10",
+      "runtime": "@vercel/python@3.10.0",
       "memory": 1024,
       "maxDuration": 60
     }
@@ -9,7 +9,7 @@
   "routes": [
     {
       "src": "/(.*)",
-      "dest": "/server.py"
+      "dest": "/api/server.py"
     }
   ]
 }
