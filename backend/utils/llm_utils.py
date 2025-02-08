@@ -166,11 +166,6 @@ async def generate_quiz_with_context(query: str) -> str:
 
 async def generate_report_with_context(query: str) -> str:
     try:
-        loop = asyncio.get_event_loop()
-        if loop.is_closed():
-            loop = asyncio.new_event_loop()
-            asyncio.set_event_loop(loop)
-        
         response = await report_chat_session.send_message_async(query)
         response_text = response.text
         

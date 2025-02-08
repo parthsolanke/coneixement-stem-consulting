@@ -4,7 +4,8 @@
       "src": "server.py",
       "use": "@vercel/python",
       "config": {
-        "runtime": "python3.10"
+        "runtime": "python3.10",
+        "maxDuration": 60
       }
     }
   ],
@@ -13,5 +14,15 @@
       "src": "/(.*)",
       "dest": "server.py"
     }
-  ]
+  ],
+  "functions": {
+    "api/report/*": {
+      "memory": 1024,
+      "maxDuration": 60
+    },
+    "api/quiz/*": {
+      "memory": 1024,
+      "maxDuration": 60
+    }
+  }
 }

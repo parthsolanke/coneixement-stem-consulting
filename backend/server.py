@@ -1,10 +1,15 @@
 import uvicorn
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from middleware import event_loop_error_handler
 from quiz.routes import app as quiz_app
 from report.routes import app as report_app
 
-app = FastAPI()
+app = FastAPI(
+    title="Career Guidance API",
+    docs_url="/api/docs",
+    openapi_url="/api/openapi.json"
+)
 
 app.add_middleware(
     CORSMiddleware,
@@ -13,6 +18,14 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+app.middleware("http")(event_loop_error_handler)
 
-app.mount("/api/quiz", quiz_app, name="quiz")
-app.mount("/api/report", report_app, name="report")
+app.mount("/api/quiz", quiz_app)
+app.mount("/api/report", report_app)
+
+@app.get("/api/health")
+async def health_check():
+    return {"status": "healthy"}
+
+if __name__ == "__main__":
+    uvicorn.run("server:app", host="0.0.0.0", port=8000, reload=True)
