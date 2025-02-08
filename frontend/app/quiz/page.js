@@ -53,22 +53,22 @@ const ProgressBar = ({ current, total }) => (
 );
 
 const QuestionCard = ({ question, onAnswer, options, total }) => (
-  <div className="w-[550px] min-h-[420px] bg-white/95 backdrop-blur-md rounded-2xl p-8 
-                  shadow-xl relative border border-gray-100 flex flex-col mt-8">
+  <div className="w-full max-w-[550px] min-h-[420px] bg-white/95 backdrop-blur-md rounded-2xl p-4 md:p-8 
+                  shadow-xl relative border border-gray-100 flex flex-col mt-8 mx-4">
     {/* Question Number Badge */}
-    <div className="absolute -top-5 -left-5 w-14 h-14 bg-gradient-to-br from-blue-600 to-purple-600 
-                    rounded-full flex items-center justify-center text-white font-bold text-xl 
+    <div className="absolute -top-3 -left-3 md:-top-5 md:-left-5 w-10 h-10 md:w-14 md:h-14 bg-gradient-to-br from-blue-600 to-purple-600 
+                    rounded-full flex items-center justify-center text-white font-bold text-lg md:text-xl 
                     shadow-lg transform rotate-0 transition-transform hover:rotate-12">
       {question.number}
     </div>
     
     {/* Question Text */}
-    <h3 className="text-xl font-bold mb-8 text-gray-800 text-center leading-relaxed pt-4 px-3">
+    <h3 className="text-lg md:text-xl font-bold mb-6 md:mb-8 text-gray-800 text-center leading-relaxed pt-4 px-2 md:px-3">
       {question.question}
     </h3>
     
     {/* Options Grid */}
-    <div className="grid grid-cols-2 gap-3 flex-grow justify-center mt-4">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-3 flex-grow justify-center mt-4">
       {options.slice(0, 2).map((option, index) => (
         <button
           key={option.label}

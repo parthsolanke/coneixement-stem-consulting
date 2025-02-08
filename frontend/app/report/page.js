@@ -32,11 +32,11 @@ ChartJS.register(
 );
 
 const SectionHeading = ({ icon, title, className = "" }) => (
-  <h2 className={`text-3xl font-bold mb-6 text-gray-800 flex items-center ${className}`}>
-    <span className="bg-blue-100 text-blue-800 p-2 rounded-lg mr-3">
+  <h2 className={`text-xl md:text-3xl font-bold mb-4 md:mb-6 text-gray-800 flex items-center ${className}`}>
+    <span className="bg-blue-100 text-blue-800 p-2 rounded-lg mr-2 md:mr-3">
       {icon}
     </span>
-    {title}
+    <span className="break-words">{title}</span>
   </h2>
 );
 
@@ -191,16 +191,16 @@ const TraitVisualization = ({ traitWeights }) => {
   return (
     <div className="flex flex-col gap-4">
       <div className="grid md:grid-cols-2 gap-8">
-        <div className="bg-white p-6 rounded-xl shadow-sm">
-          <h3 className="text-xl font-semibold mb-4 text-gray-800">Trait Distribution</h3>
-          <div className="aspect-square">
+        <div className="bg-white p-4 md:p-6 rounded-xl shadow-sm">
+          <h3 className="text-lg md:text-xl font-semibold mb-4 text-gray-800">Trait Distribution</h3>
+          <div className="aspect-square w-full max-w-[400px] mx-auto">
             <Radar data={radarData} options={radarOptions} />
           </div>
         </div>
-        <div className="bg-white p-6 rounded-xl shadow-sm">
-          <h3 className="text-xl font-semibold mb-4 text-gray-800">Detailed Scores</h3>
-          <div className="h-[500px] relative">
-            <div className="absolute inset-0 px-4">
+        <div className="bg-white p-4 md:p-6 rounded-xl shadow-sm">
+          <h3 className="text-lg md:text-xl font-semibold mb-4 text-gray-800">Detailed Scores</h3>
+          <div className="h-[400px] md:h-[500px] relative">
+            <div className="absolute inset-0 px-2 md:px-4">
               <Bar data={barData} options={barOptions} />
             </div>
           </div>
@@ -208,8 +208,8 @@ const TraitVisualization = ({ traitWeights }) => {
       </div>
       
       {/* Legend */}
-      <div className="bg-white p-4 rounded-xl shadow-sm"> 
-        <div className="flex justify-center gap-8"> 
+      <div className="bg-white p-4 rounded-xl shadow-sm overflow-x-auto"> 
+        <div className="flex flex-wrap md:flex-nowrap justify-center gap-4 md:gap-8 min-w-[300px]"> 
           <div className="flex items-center gap-2">
             <span className="w-3 h-3 bg-green-500 rounded-full"></span>
             <span className="text-sm text-gray-600">Strong (≥70%)</span>
@@ -272,11 +272,97 @@ const DownloadButton = ({ onClick, isGenerating }) => (
   </div>
 );
 
+const Progress = ({ value }) => (
+  <div className="w-full max-w-md mx-auto bg-gray-200 rounded-full h-2 mb-4">
+    <div 
+      className="h-2 rounded-full bg-blue-500 transition-all duration-300 ease-out"
+      style={{ width: `${value}%` }}
+    />
+  </div>
+);
+
+const LoadingState = () => {
+  const [progress, setProgress] = useState(0);
+
+  useEffect(() => {
+    // Estimate total loading time as 15 seconds
+    const totalTime = 15000;
+    const interval = 100; // Update every 100ms
+    const incrementValue = (interval / totalTime) * 100;
+
+    const timer = setInterval(() => {
+      setProgress(prev => {
+        // Slow down progress as it gets closer to 98%
+        const remaining = 98 - prev;
+        const increment = (remaining / 100) * incrementValue;
+        return Math.min(prev + increment, 98);
+      });
+    }, interval);
+
+    return () => clearInterval(timer);
+  }, []);
+
+  // Effect to update progress to 100% when reportData is received
+  useEffect(() => {
+    if (progress === 98) {
+      // If we've been at 98% for more than 2 seconds, assume the response is taking longer
+      const timeout = setTimeout(() => {
+        setProgress(99); // Move to 99% to indicate waiting for response
+      }, 2000);
+      return () => clearTimeout(timeout);
+    }
+  }, [progress]);
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 pt-20">
+      <div className="max-w-2xl mx-auto p-6">
+        <div className="text-center mb-8">
+          <div className="w-3/4 h-8 bg-gray-200 rounded-lg animate-pulse mx-auto mb-4"></div>
+          <div className="w-1/2 h-4 bg-gray-200 rounded animate-pulse mx-auto"></div>
+        </div>
+        
+        <div className="flex flex-col items-center justify-center gap-6 mb-12">
+          <div className="text-center space-y-3">
+            <Progress value={progress} />
+            <p className="text-gray-700 font-medium">
+              Analyzing your STEM profile... {Math.round(progress)}%
+            </p>
+            {progress === 99 && (
+              <p className="text-gray-500 text-sm animate-pulse">
+                Almost there...
+              </p>
+            )}
+            {progress < 99 && (
+              <p className="text-gray-500 text-sm">
+                Estimated time remaining: {Math.ceil((100 - progress) * 0.15)} seconds
+              </p>
+            )}
+          </div>
+        </div>
+
+        {/* Simple placeholder cards */}
+        <div className="space-y-6">
+          {[1, 2].map((i) => (
+            <div key={i} className="bg-white rounded-lg p-6 animate-pulse">
+              <div className="h-4 bg-gray-200 rounded w-3/4 mb-4"></div>
+              <div className="space-y-2">
+                <div className="h-3 bg-gray-200 rounded"></div>
+                <div className="h-3 bg-gray-200 rounded w-5/6"></div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+};
+
 const ReportPage = () => {
   const reportRef = useRef(null);
   const [traitWeights, setTraitWeights] = useState(null);
   const [reportData, setReportData] = useState(null);
   const [isGeneratingPdf, setIsGeneratingPdf] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
 
   useEffect(() => {
@@ -307,8 +393,10 @@ const ReportPage = () => {
         }
       );
       setReportData(data.report);
+      setIsLoading(false);
     } catch (error) {
       console.error('Error fetching report:', error.response?.data || error.message);
+      setIsLoading(false);
       // add error handling UI here
     }
   };
@@ -412,12 +500,8 @@ const ReportPage = () => {
     }
   };
 
-  if (!traitWeights || !reportData) {
-    return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-blue-500"></div>
-      </div>
-    );
+  if (!traitWeights || !reportData || isLoading) {
+    return <LoadingState />;
   }
 
   const { strengths, weaknesses } = analyzeTraits(traitWeights);
@@ -425,16 +509,16 @@ const ReportPage = () => {
   return (
     <>
       <Navbar />
-      <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 p-6 pt-24">
-        <div ref={reportRef} className="w-full max-w-6xl space-y-8 mb-24">
+      <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 p-3 md:p-6 pt-20 md:pt-24">
+        <div ref={reportRef} className="w-full max-w-6xl space-y-6 md:space-y-8 mb-20 md:mb-24">
           {/* Header Section */}
           <SectionCard className="relative overflow-hidden">
             <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-blue-100 to-purple-100 rounded-full blur-3xl opacity-50 -z-10"></div>
-            <div className="text-center mb-12">
-              <h1 className="text-6xl font-bold mb-6 bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 bg-clip-text text-transparent">
+            <div className="text-center mb-8 md:mb-12">
+              <h1 className="text-4xl md:text-6xl font-bold mb-4 md:mb-6 bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 bg-clip-text text-transparent px-2">
                 Your STEM Profile Analysis
               </h1>
-              <p className="text-gray-600 text-xl max-w-3xl mx-auto leading-relaxed">
+              <p className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed px-2">
                 Based on your responses, we've created a comprehensive analysis of your STEM traits and potential career paths.
                 This report will help guide your educational and career decisions.
               </p>

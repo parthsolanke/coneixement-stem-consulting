@@ -10,6 +10,8 @@ module.exports = {
       animation: {
         'cursor-blink': 'blink 1s step-end infinite',
         'fadeIn': 'fadeIn 0.5s ease-in',
+        'spin-slow': 'spin 3s linear infinite',
+        'spin-slower': 'spin 4s linear infinite',
       },
       keyframes: {
         blink: {

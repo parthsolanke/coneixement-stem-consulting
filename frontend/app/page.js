@@ -11,19 +11,20 @@ export default function Page() {
     <ErrorBoundary>
       <Navbar />
       <main className="flex-grow">
-        <section id="hero" className="relative min-h-[calc(100vh-6rem)] flex items-center">
+        <section id="hero" className="relative min-h-[calc(100vh-4rem)] sm:min-h-[calc(100vh-6rem)] flex items-center">
           <Hero />
         </section>
         
-        <section id="features" className="py-24">
+        <section id="features" className="py-12 sm:py-24 px-4 sm:px-6">
           <Features />
         </section>
         
-        <section id="testimonials" className="bg-gray-50 py-24">
+        <section id="testimonials" className="relative bg-gradient-to-b from-gray-50 to-white py-16 sm:py-24 px-4 sm:px-6 overflow-hidden">
+          <div className="absolute inset-0 bg-[url(/grid.svg)] bg-center [mask-image:linear-gradient(180deg,white,rgba(255,255,255,0))]"></div>
           <Testimonials />
         </section>
         
-        <section id="faqs" className="bg-gray-50 py-20">
+        <section id="faqs" className="bg-white py-16 sm:py-24 px-4 sm:px-6">
           <Faqs />
         </section>
       </main>
