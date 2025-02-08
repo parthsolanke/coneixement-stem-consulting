@@ -1,4 +1,4 @@
-# server.py
+import uvicorn
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from quiz.routes import app as quiz_app
@@ -17,10 +17,13 @@ app.add_middleware(
 app.mount("/api/quiz", quiz_app, name="quiz")
 app.mount("/api/report", report_app, name="report")
 
-if __name__ == "__main__":
-    import uvicorn
+def run():
     uvicorn.run(
         app, 
-        host="127.0.0.1", 
+        host="0.0.0.0", 
         port=8000,
+        loop="auto",
     )
+
+if __name__ == "__main__":
+    run()

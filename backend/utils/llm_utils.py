@@ -3,6 +3,7 @@ from utils.models import QuizResponse
 from utils.context import QUIZ_CONTEXT, REPORT_CONTEXT
 from utils.config import GEMINI_API_KEY, MODEL
 import google.generativeai as genai
+import asyncio
 import json
 import re
 import logging
@@ -165,6 +166,10 @@ async def generate_quiz_with_context(query: str) -> str:
 
 async def generate_report_with_context(query: str) -> str:
     try:
+        loop = asyncio.get_event_loop()
+        if loop.is_closed():
+            loop = asyncio.new_event_loop()
+            asyncio.set_event_loop(loop)
         
         response = await report_chat_session.send_message_async(query)
         response_text = response.text
@@ -176,7 +181,6 @@ async def generate_report_with_context(query: str) -> str:
             logger.error("Failed to parse LLM response", exc_info=True)
             logger.error(f"Problematic response text:\n{response_text}")
             raise
-            
     except Exception as e:
         logger.error("Error in generate_report_with_context", exc_info=True)
         raise
