@@ -1,7 +1,7 @@
 # utils/llm_utils.py
-from utils.models import QuizResponse
-from utils.context import QUIZ_CONTEXT, REPORT_CONTEXT
-from utils.config import GEMINI_API_KEY, MODEL
+from api.utils.models import QuizResponse
+from api.utils.context import QUIZ_CONTEXT, REPORT_CONTEXT
+from api.utils.config import GEMINI_API_KEY, MODEL
 import google.generativeai as genai
 import json
 import re

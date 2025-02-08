@@ -1,6 +1,6 @@
 # quiz/quiz_utils.py
 import json
-from utils.llm_utils import generate_quiz_with_context
+from api.utils.llm_utils import generate_quiz_with_context
 
 async def generate_quiz(extraCurricular: str, subjects: str, age: str) -> dict:
     context = f"""

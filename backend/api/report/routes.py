@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.responses import JSONResponse
-from report.report_utils import generate_report, validate_report
-from utils.models import ReportRequest, ReportResponse
+from api.report.report_utils import generate_report, validate_report
+from api.utils.models import ReportRequest, ReportResponse
 
 app = FastAPI(root_path="/api/report")
 

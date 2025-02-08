@@ -1,7 +1,7 @@
 # quiz/routes.py
 from fastapi import FastAPI, HTTPException
-from quiz.quiz_utils import generate_quiz, validate_quiz
-from utils.models import QuizResponse, QuizRequest
+from api.quiz.quiz_utils import generate_quiz, validate_quiz
+from api.utils.models import QuizResponse, QuizRequest
 
 app = FastAPI()
 

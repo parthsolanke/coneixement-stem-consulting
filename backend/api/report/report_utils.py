@@ -1,5 +1,5 @@
-from utils.llm_utils import generate_report_with_context
-from utils.report_sections import SECTION_TEMPLATES, SECTION_VALIDATORS, SECTION_ORDER
+from api.utils.llm_utils import generate_report_with_context
+from api.utils.report_sections import SECTION_TEMPLATES, SECTION_VALIDATORS, SECTION_ORDER
 from typing import Dict, List, Tuple
 import json
 import logging

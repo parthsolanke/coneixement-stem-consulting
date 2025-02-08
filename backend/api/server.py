@@ -1,9 +1,9 @@
 import uvicorn
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from middleware.error_handlers import event_loop_error_handler
-from quiz.routes import app as quiz_app
-from report.routes import app as report_app
+from api.middleware.error_handlers import event_loop_error_handler
+from api.quiz.routes import app as quiz_app
+from api.report.routes import app as report_app
 
 app = FastAPI(
     title="Career Guidance API",
