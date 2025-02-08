@@ -1,30 +1,41 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from fastapi.responses import JSONResponse
-from api.report.report_utils import generate_report, validate_report
-from api.utils.models import ReportRequest, ReportResponse
+from report.report_utils import generate_report, validate_report
+from utils.models import ReportRequest, ReportResponse
+import asyncio
+import logging
+
+logger = logging.getLogger(__name__)
 
 app = FastAPI(root_path="/api/report")
 
 @app.post("/", response_model=ReportResponse)
 async def get_report(request: ReportRequest):
     try:
+        try:
+            loop = asyncio.get_running_loop()
+        except RuntimeError:
+            loop = asyncio.new_event_loop()
+            asyncio.set_event_loop(loop)
+        
         report_data = await generate_report(
             request.scores,
             request.strengths,
             request.weaknesses
         )
+        
         valid, message = validate_report(report_data)
         if not valid:
-            return JSONResponse(
-                status_code=400,
-                content={"detail": message, "data": report_data}
-            )
+            raise HTTPException(status_code=400, detail=message)
+            
         return report_data
+        
     except Exception as e:
-        print(f"Error in report generation endpoint: {str(e)}")
+        error_msg = f"Error in report generation: {str(e)}"
+        logger.error(error_msg)
         return JSONResponse(
             status_code=500,
-            content={"detail": str(e)}
+            content={"detail": error_msg}
         )
 
 @app.get("/")

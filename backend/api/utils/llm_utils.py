@@ -165,9 +165,15 @@ async def generate_quiz_with_context(query: str) -> str:
 
 async def generate_report_with_context(query: str) -> str:
     try:
-        response = await report_chat_session.send_message_async(query)
-        response_text = response.text
+        new_session = report_model.start_chat(history=REPORT_CONTEXT)
+        response = await new_session.send_message_async(
+            query,
+            generation_config=genai.GenerationConfig(
+                timeout=30
+            )
+        )
         
+        response_text = response.text
         try:
             json_response = parse_json_response(response_text)
             return json.dumps(json_response)
