@@ -16,14 +16,3 @@ app.add_middleware(
 
 app.mount("/api/quiz", quiz_app, name="quiz")
 app.mount("/api/report", report_app, name="report")
-
-def run():
-    uvicorn.run(
-        app, 
-        host="0.0.0.0", 
-        port=8000,
-        loop="auto",
-    )
-
-if __name__ == "__main__":
-    run()
