@@ -294,7 +294,7 @@ const ReportPage = () => {
     const { strengths, weaknesses } = analyzeTraits(traits);
     try {
       const { data } = await axios.post(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/report`,
+        `${process.env.NEXT_PUBLIC_API_URL}/api/report/`,
         {
           scores: traits,
           strengths,

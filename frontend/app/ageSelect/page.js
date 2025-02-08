@@ -158,7 +158,7 @@ export default function Page() {
     setQuizLoading(true);
     try {
       const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/quiz`,
+        `${process.env.NEXT_PUBLIC_API_URL}/api/quiz/`,
         {
           extraCurricular: formData.extraCurricular,
           subjects: formData.subjects,
