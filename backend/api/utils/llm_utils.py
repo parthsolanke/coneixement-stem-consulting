@@ -3,6 +3,8 @@ from api.utils.models import QuizResponse
 from api.utils.context import QUIZ_CONTEXT, REPORT_CONTEXT
 from api.utils.config import GEMINI_API_KEY, MODEL
 import google.generativeai as genai
+from google.api_core.exceptions import ResourceExhausted
+import asyncio
 import json
 import re
 import logging
@@ -156,29 +158,51 @@ def parse_json_response(text: str) -> dict:
     raise ValueError(f"Could not parse JSON response. Original text:\n{text}")
 
 async def generate_quiz_with_context(query: str) -> str:
-    try:
-        response = await quiz_chat_session.send_message_async(query)
-        return response.text
-    except Exception as e:
-        print(f"An error occurred: {e}")
-        return ""
+    max_retries = 5
+    base_delay = 1
+
+    for attempt in range(max_retries):
+        try:
+            response = await quiz_chat_session.send_message_async(query)
+            return response.text
+        except ResourceExhausted as e:
+            print(f"Rate limit exceeded. Retrying in {base_delay} seconds... (Attempt {attempt+1}/{max_retries})")
+            await asyncio.sleep(base_delay)
+            base_delay *= 2
+        except Exception as e:
+            print(f"An error occurred: {e}")
+            return ""
+    
+    print("Max retries reached. Could not generate quiz.")
+    return ""
 
 async def generate_report_with_context(query: str) -> str:
-    try:
-        new_session = report_model.start_chat(history=REPORT_CONTEXT)
-        response = await new_session.send_message_async(query)
-        
-        response_text = response.text
+    max_retries = 5
+    base_delay = 1  # init 1-second delay
+
+    for attempt in range(max_retries):
         try:
-            json_response = parse_json_response(response_text)
-            return json.dumps(json_response)
+            new_session = report_model.start_chat(history=REPORT_CONTEXT)
+            response = await new_session.send_message_async(query)
+            response_text = response.text
+
+            try:
+                json_response = parse_json_response(response_text)
+                return json.dumps(json_response)
+            except Exception as e:
+                logger.error("Failed to parse LLM response", exc_info=True)
+                logger.error(f"Problematic response text:\n{response_text}")
+                raise
+
+        except ResourceExhausted as e:
+            logger.warning(f"Rate limit exceeded. Retrying in {base_delay} seconds... (Attempt {attempt+1}/{max_retries})")
+            await asyncio.sleep(base_delay)
+            base_delay *= 2  # backoff: 1s -> 2s -> 4s -> 8s
         except Exception as e:
-            logger.error("Failed to parse LLM response", exc_info=True)
-            logger.error(f"Problematic response text:\n{response_text}")
+            logger.error("Error in generate_report_with_context", exc_info=True)
             raise
-    except Exception as e:
-        logger.error("Error in generate_report_with_context", exc_info=True)
-        raise
+
+    raise Exception("Max retries reached. Failed to generate report due to API rate limits.")
 
 async def generate_quiz_without_context(query: str) -> str:
     try:
