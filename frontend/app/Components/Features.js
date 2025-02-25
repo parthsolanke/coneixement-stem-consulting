@@ -75,11 +75,11 @@ export default function Features() {
           </div>
           <div className="relative h-96 lg:h-[500px]">
             <Image
-              src="/Images/laptop-girl.jpg"
-              alt="Student exploring career options"
+              src="/vectors/career-growth.svg"
+              alt="Career growth illustration"
               layout="fill"
-              objectFit="cover"
-              className="rounded-xl shadow-2xl transform group-hover:scale-105 transition-transform duration-300"
+              objectFit="contain"
+              className="rounded-xl transform group-hover:scale-105 transition-transform duration-300"
             />
           </div>
         </div>

@@ -10,8 +10,8 @@ export default function Page() {
   return (
     <ErrorBoundary>
       <Navbar />
-      <main className="flex-grow">
-        <section id="hero" className="relative min-h-[calc(100vh-4rem)] sm:min-h-[calc(100vh-6rem)] flex items-center">
+      <main>
+        <section id="hero" className="relative w-full h-screen">
           <Hero />
         </section>
         
