@@ -77,12 +77,24 @@ const TraitVisualization = ({ traitWeights }) => {
         },
         suggestedMin: 0,
         suggestedMax: 100,
+        pointLabels: {
+          font: {
+            size: 12,
+            weight: 'bold'
+          }
+        },
+        ticks: {
+          font: {
+            size: 12,
+            weight: 'medium'
+          }
+        }
       },
     },
     plugins: {
       legend: {
         display: false,
-      },
+      }
     },
   };
 
@@ -139,7 +151,7 @@ const TraitVisualization = ({ traitWeights }) => {
           callback: (value) => `${value}%`,
           font: {
             size: 12,
-            weight: 'medium'
+            weight: 'bold'
           }
         },
         title: {
@@ -160,8 +172,8 @@ const TraitVisualization = ({ traitWeights }) => {
         ticks: {
           padding: 12,
           font: {
-            size: 13,
-            weight: 'medium'
+            size: 12,
+            weight: 'bold'
           },
           align: 'center',
           crossAlign: 'far',
@@ -189,20 +201,21 @@ const TraitVisualization = ({ traitWeights }) => {
   };
 
   return (
-    <div className="flex flex-col gap-4">
-      <div className="grid md:grid-cols-2 gap-8">
-        <div className="bg-white p-4 md:p-6 rounded-xl shadow-sm">
-          <h3 className="text-lg md:text-xl font-semibold mb-4 text-gray-800">Trait Distribution</h3>
-          <div className="aspect-square w-full max-w-[400px] mx-auto">
-            <Radar data={radarData} options={radarOptions} />
-          </div>
+    <div className="flex flex-col gap-6">
+      {/* Radar Chart */}
+      <div className="bg-white p-4 md:p-6 rounded-xl shadow-sm">
+        <h3 className="text-lg md:text-xl font-semibold mb-4 text-gray-800">Trait Distribution</h3>
+        <div className="aspect-square w-full max-w-[500px] mx-auto">
+          <Radar data={radarData} options={radarOptions} />
         </div>
-        <div className="bg-white p-4 md:p-6 rounded-xl shadow-sm">
-          <h3 className="text-lg md:text-xl font-semibold mb-4 text-gray-800">Detailed Scores</h3>
-          <div className="h-[400px] md:h-[500px] relative">
-            <div className="absolute inset-0 px-2 md:px-4">
-              <Bar data={barData} options={barOptions} />
-            </div>
+      </div>
+
+      {/* Bar Chart */}
+      <div className="bg-white p-4 md:p-6 rounded-xl shadow-sm">
+        <h3 className="text-lg md:text-xl font-semibold mb-4 text-gray-800">Detailed Scores</h3>
+        <div className="h-[400px] md:h-[500px] relative">
+          <div className="absolute inset-0 px-2 md:px-4">
+            <Bar data={barData} options={barOptions} />
           </div>
         </div>
       </div>
@@ -552,9 +565,11 @@ const ReportPage = () => {
               />
               <TraitVisualization traitWeights={traitWeights} />
             </div>
+          </SectionCard>
 
-            {/* Strengths and Growth Areas Grid */}
-            <div className="grid md:grid-cols-2 gap-8 mb-12">
+          {/* Strengths and Growth Areas in a new SectionCard */}
+          <SectionCard>
+            <div className="grid md:grid-cols-2 gap-8">
               <div className="bg-gradient-to-br from-green-50 to-green-100 p-8 rounded-xl shadow-sm hover:shadow-md transition-all duration-300">
                 <h2 className="text-2xl font-semibold mb-4 text-green-800 flex items-center">
                   <svg className="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
