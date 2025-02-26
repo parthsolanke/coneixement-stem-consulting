@@ -1,6 +1,8 @@
 "use client"
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
+
 
 const NavLink = ({ href, children, isHighlighted = false }) => (
   <a
@@ -111,7 +113,7 @@ export default function Navbar() {
             <NavLink href="https://entechonline.com/" isHighlighted>Explore</NavLink>
             <NavLink href="#">Blogs</NavLink>
             <NavLink href="#">About Us</NavLink>
-            <NavLink href="#">Contact</NavLink>
+            <NavLink href="/contactus">Contact</NavLink>
           </div>
         </div>
 
