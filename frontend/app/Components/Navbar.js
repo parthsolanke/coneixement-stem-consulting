@@ -24,7 +24,7 @@ const NavLink = ({ href, children, isHighlighted = false }) => (
   </a>
 );
 
-export default function Navbar() {
+export default function Navbar({ hidden }) {
   const [showNavbar, setShowNavbar] = useState(true);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   let lastScrollY = 0;
@@ -51,6 +51,7 @@ export default function Navbar() {
         bg-white/80 backdrop-blur-lg shadow-sm
         transition-all duration-300 ease-in-out
         ${showNavbar ? "translate-y-0" : "-translate-y-full"}
+        ${hidden ? "!hidden" : ""}
         z-50
       `}
     >

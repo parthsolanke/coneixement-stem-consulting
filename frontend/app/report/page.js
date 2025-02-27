@@ -1,6 +1,5 @@
 "use client";
 import { useEffect, useState, useRef } from "react";
-import { useRouter } from "next/navigation";
 import axios from "axios";
 import Navbar from "../Components/Navbar";
 import { Chart as ChartJS, RadialLinearScale, PointElement, LineElement, Filler, Tooltip, Legend, CategoryScale, LinearScale, BarElement } from 'chart.js';
@@ -9,6 +8,7 @@ import LoadingState from './components/LoadingState';
 import { generatePDF } from './utils/pdfGenerator';
 import PrintStyles from './components/PrintStyles';
 import ReportTemplate from './components/ReportTemplate';
+import EmailOverlay from './components/EmailOverlay';
 
 ChartJS.register(RadialLinearScale, PointElement, LineElement, Filler, Tooltip, Legend, CategoryScale, LinearScale, BarElement);
 
@@ -30,7 +30,7 @@ const ReportPage = () => {
   const [reportData, setReportData] = useState(null);
   const [isGeneratingPdf, setIsGeneratingPdf] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  const router = useRouter();
+  const [emailSubmitted, setEmailSubmitted] = useState(false);
 
   useEffect(() => {
     const query = new URLSearchParams(window.location.search);
@@ -78,6 +78,18 @@ const ReportPage = () => {
     }
   };
 
+  const handleEmailSubmit = async (email) => {
+    try {
+      // You can add API call here to save email
+      // await axios.post(...
+      setEmailSubmitted(true);
+      // Optionally store in localStorage to remember user
+      localStorage.setItem('reportEmailSubmitted', 'true');
+    } catch (error) {
+      console.error('Error saving email:', error);
+    }
+  };
+
   if (!traitWeights || !reportData || isLoading) {
     return <LoadingState />;
   }
@@ -87,21 +99,24 @@ const ReportPage = () => {
   return (
     <>
       <PrintStyles />
-      <Navbar className="no-print" />
-      <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 p-3 md:p-6 pt-20 md:pt-24">
-        <ReportTemplate 
-          reportRef={reportRef}
-          reportData={reportData}
-          traitWeights={traitWeights}
-          strengths={strengths}
-          weaknesses={weaknesses}
-        />
-        <DownloadButton 
-          onClick={handleGeneratePDF} 
-          isGenerating={isGeneratingPdf}
-          className="no-print fixed bottom-6 right-6 z-50 print:hidden" 
-        />
+      <Navbar hidden={!emailSubmitted} className="no-print" />
+      <div className={`relative ${!emailSubmitted ? 'filter blur-md' : ''}`}>
+        <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 p-3 md:p-6 pt-20 md:pt-24">
+          <ReportTemplate 
+            reportRef={reportRef}
+            reportData={reportData}
+            traitWeights={traitWeights}
+            strengths={strengths}
+            weaknesses={weaknesses}
+          />
+          <DownloadButton 
+            onClick={handleGeneratePDF} 
+            isGenerating={isGeneratingPdf}
+            className="no-print fixed bottom-6 right-6 z-50 print:hidden" 
+          />
+        </div>
       </div>
+      {!emailSubmitted && <EmailOverlay onSubmit={handleEmailSubmit} />}
     </>
   );
 };
