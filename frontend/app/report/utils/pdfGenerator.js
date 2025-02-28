@@ -8,7 +8,8 @@ export const generatePDF = async (reportRef, options = { download: false }) => {
     orientation: 'p',
     unit: 'mm',
     format: 'a4',
-    compress: true
+    compress: true,
+    precision: 2, // Reduce precision for smaller file size
   });
 
   const sections = Array.from(reportRef.children);
@@ -51,17 +52,27 @@ export const generatePDF = async (reportRef, options = { download: false }) => {
     
     try {
       const canvas = await html2canvas(section, {
-        scale: 3, // Increased scale for better quality
+        scale: 2, // Reduced from 3 to 2 for better size/quality balance
         logging: false,
         useCORS: true,
         allowTaint: true,
         backgroundColor: '#ffffff',
         letterRendering: true,
+        imageTimeout: 0,
+        removeContainer: true,
+        // Optimize canvas rendering
+        canvas: null,
         onclone: (clonedDoc) => {
           const element = clonedDoc.querySelector(`#section-${i}`);
           if (element) {
             element.style.margin = '0';
             element.style.padding = '20px';
+            // Remove any unused styles
+            Array.from(element.classList).forEach(cls => {
+              if (cls.includes('hover:') || cls.includes('focus:')) {
+                element.classList.remove(cls);
+              }
+            });
           }
         }
       });
@@ -73,15 +84,22 @@ export const generatePDF = async (reportRef, options = { download: false }) => {
         pdf.addPage();
       }
 
+      // Add image with optimized compression
       pdf.addImage(
-        canvas.toDataURL('image/jpeg', 1.0),
+        canvas.toDataURL('image/jpeg', 0.7), // Reduced quality to 70%
         'JPEG',
         margins.left,
         margins.top,
         imgWidth,
         imgHeight,
         `section-${i}`,
-        'FAST'
+        'FAST',
+        // Optimize image compression
+        {
+          compress: true,
+          imageQuality: 0.7,
+          optimization: true
+        }
       );
 
       addHeader(currentPage);
@@ -101,7 +119,10 @@ export const generatePDF = async (reportRef, options = { download: false }) => {
     creator: 'Coneixement STEM Consulting',
     author: 'Coneixement',
     keywords: 'STEM, career guidance, education',
-    creationDate: new Date()
+    creationDate: new Date(),
+    compress: true,
+    putOnlyUsedFonts: true,
+    floatPrecision: 2
   });
 
   if (options.download) {
@@ -113,5 +134,9 @@ export const generatePDF = async (reportRef, options = { download: false }) => {
   // For email attachment
   const pdfBuffer = pdf.output('arraybuffer');
   const base64String = Buffer.from(pdfBuffer).toString('base64');
-  return base64String;
+  return optimizePDFSize(base64String);
+};
+
+const optimizePDFSize = (base64String) => {
+  return base64String.trim().replace(/\s/g, '');
 };

@@ -86,40 +86,69 @@ const ReportPage = () => {
   const handleEmailSubmit = async (formData) => {
     const { name, email } = formData;
     try {
-      setIsSubmitting(true);
-      setIsGeneratingPdf(true);
-      
-      const pdfBase64 = await generatePDF(reportRef.current);
-      
-      if (!pdfBase64) {
-        throw new Error('Failed to generate PDF');
-      }
-      
-      const response = await axios.post('/api/send-email', {
-        type: 'report',
-        name,
-        email,
-        pdfBuffer: pdfBase64
-      });
+        setIsSubmitting(true);
+        setIsGeneratingPdf(true);
+        
+        const pdfBase64 = await generatePDF(reportRef.current);
+        
+        if (!pdfBase64) {
+            throw new Error('Failed to generate PDF');
+        }
 
-      if (response.data.success) {
-        setNotification({ type: 'success', message: 'Report sent successfully! Check your email.' });
-        setEmailSubmitted(true);
-        localStorage.setItem('reportEmailSubmitted', 'true');
-      } else {
-        throw new Error(response.data.message);
-      }
+        // Split the base64 string into chunks of 500KB
+        const chunkSize = 500 * 1024; // 500KB in bytes
+        const chunks = [];
+        for (let i = 0; i < pdfBase64.length; i += chunkSize) {
+            chunks.push(pdfBase64.slice(i, i + chunkSize));
+        }
+
+        // Generate a unique ID for this upload
+        const uploadId = Date.now().toString();
+
+        // Send chunks sequentially
+        for (let i = 0; i < chunks.length; i++) {
+            const response = await axios.post('/api/send-email', {
+                type: 'report',
+                name,
+                email,
+                pdfChunk: chunks[i],
+                chunkIndex: i,
+                totalChunks: chunks.length,
+                uploadId
+            });
+
+            if (!response.data.success) {
+                throw new Error(`Failed to upload chunk ${i}`);
+            }
+        }
+
+        // Trigger final email send
+        const finalResponse = await axios.post('/api/send-email', {
+            type: 'report',
+            name,
+            email,
+            uploadId,
+            finalizeUpload: true
+        });
+
+        if (finalResponse.data.success) {
+            setNotification({ type: 'success', message: 'Report sent successfully! Check your email.' });
+            setEmailSubmitted(true);
+            localStorage.setItem('reportEmailSubmitted', 'true');
+        } else {
+            throw new Error(finalResponse.data.message);
+        }
     } catch (error) {
-      console.error('Error sending report:', error);
-      setNotification({ 
-        type: 'error', 
-        message: 'Failed to send report. Please try again.' 
-      });
+        console.error('Error sending report:', error);
+        setNotification({ 
+            type: 'error', 
+            message: 'Failed to send report. Please try again.' 
+        });
     } finally {
-      setIsGeneratingPdf(false);
-      setIsSubmitting(false);
+        setIsGeneratingPdf(false);
+        setIsSubmitting(false);
     }
-  };
+};
 
   if (!traitWeights || !reportData || isLoading) {
     return <LoadingState />;
