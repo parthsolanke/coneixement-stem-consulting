@@ -19,14 +19,14 @@ const ContactFormEmail = ({ name, email, message }) => (
         
         <Section style={section}>
           <Text style={text}>
-            <strong>From:</strong> {name}
+            <strong style={labelStyle}>From:</strong> {name}
           </Text>
           <Text style={text}>
-            <strong>Email:</strong> {email}
+            <strong style={labelStyle}>Email:</strong> {email}
           </Text>
         </Section>
 
-        <Section style={section}>
+        <Section style={messageSection}>
           <Text style={messageLabel}>Message:</Text>
           <Text style={messageBox}>{message}</Text>
         </Section>
@@ -36,50 +36,72 @@ const ContactFormEmail = ({ name, email, message }) => (
 );
 
 const main = {
-  backgroundColor: '#ffffff',
+  backgroundColor: '#f6f9fc',
   fontFamily: '-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif',
 };
 
 const container = {
   margin: '0 auto',
-  padding: '20px 0 48px',
-  maxWidth: '580px',
+  padding: '40px 20px',
+  maxWidth: '600px',
 };
 
 const h1 = {
-  color: '#333',
-  fontSize: '24px',
+  color: '#1a365d',
+  fontSize: '28px',
   fontWeight: 'bold',
-  padding: '16px 0',
   textAlign: 'center',
+  margin: '0 0 30px',
+  padding: '20px',
+  backgroundColor: 'white',
+  borderRadius: '12px',
+  boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
 };
 
 const section = {
-  padding: '24px',
-  backgroundColor: '#f7f7f7',
+  padding: '30px',
+  backgroundColor: 'white',
   borderRadius: '12px',
-  marginBottom: '24px',
+  marginBottom: '20px',
+  boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+};
+
+const messageSection = {
+  padding: '30px',
+  backgroundColor: 'white',
+  borderRadius: '12px',
+  boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+  background: 'linear-gradient(to bottom right, white, #f8fafc)',
 };
 
 const text = {
-  margin: '8px 0',
-  color: '#333',
+  margin: '12px 0',
+  color: '#2d3748',
   fontSize: '16px',
   lineHeight: '24px',
 };
 
+const labelStyle = {
+  color: '#4a5568',
+  marginRight: '8px',
+};
+
 const messageLabel = {
-  ...text,
+  color: '#4a5568',
+  fontSize: '16px',
   fontWeight: 'bold',
-  marginBottom: '12px',
+  marginBottom: '16px',
 };
 
 const messageBox = {
-  ...text,
-  backgroundColor: '#ffffff',
-  padding: '16px',
+  backgroundColor: 'white',
+  padding: '20px',
   borderRadius: '8px',
   whiteSpace: 'pre-wrap',
+  fontSize: '16px',
+  lineHeight: '24px',
+  color: '#2d3748',
+  border: '1px solid #e2e8f0',
 };
 
 export default ContactFormEmail;

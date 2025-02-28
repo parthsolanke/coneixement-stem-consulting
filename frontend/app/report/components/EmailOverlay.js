@@ -1,4 +1,4 @@
-const EmailOverlay = ({ onSubmit }) => {
+const EmailOverlay = ({ onSubmit, isSubmitting }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const formData = {
@@ -48,9 +48,17 @@ const EmailOverlay = ({ onSubmit }) => {
           </div>
           <button
             type="submit"
-            className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-medium py-2 px-4 rounded-lg hover:from-blue-700 hover:to-indigo-700 transition-all duration-200 focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+            disabled={isSubmitting}
+            className="w-full bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 transition disabled:bg-blue-400"
           >
-            View Report
+            {isSubmitting ? (
+              <div className="flex items-center justify-center">
+                <div className="w-5 h-5 border-t-2 border-b-2 border-white rounded-full animate-spin mr-2"></div>
+                Sending...
+              </div>
+            ) : (
+              'Get Report'
+            )}
           </button>
         </form>
       </div>

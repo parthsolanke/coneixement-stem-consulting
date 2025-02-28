@@ -9,6 +9,7 @@ import { generatePDF } from './utils/pdfGenerator';
 import PrintStyles from './components/PrintStyles';
 import ReportTemplate from './components/ReportTemplate';
 import EmailOverlay from './components/EmailOverlay';
+import Toast from "../Components/Toast";
 
 ChartJS.register(RadialLinearScale, PointElement, LineElement, Filler, Tooltip, Legend, CategoryScale, LinearScale, BarElement);
 
@@ -31,6 +32,8 @@ const ReportPage = () => {
   const [isGeneratingPdf, setIsGeneratingPdf] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [emailSubmitted, setEmailSubmitted] = useState(false);
+  const [notification, setNotification] = useState(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
     const query = new URLSearchParams(window.location.search);
@@ -72,21 +75,49 @@ const ReportPage = () => {
     if (!reportRef.current || isGeneratingPdf) return;
     try {
       setIsGeneratingPdf(true);
-      await generatePDF(reportRef.current);
+      await generatePDF(reportRef.current, { download: true });
+    } catch (error) {
+      console.error('Error generating PDF:', error);
     } finally {
       setIsGeneratingPdf(false);
     }
   };
 
-  const handleEmailSubmit = async (email) => {
+  const handleEmailSubmit = async (formData) => {
+    const { name, email } = formData;
     try {
-      // You can add API call here to save email
-      // await axios.post(...
-      setEmailSubmitted(true);
-      // Optionally store in localStorage to remember user
-      localStorage.setItem('reportEmailSubmitted', 'true');
+      setIsSubmitting(true);
+      setIsGeneratingPdf(true);
+      
+      const pdfBase64 = await generatePDF(reportRef.current);
+      
+      if (!pdfBase64) {
+        throw new Error('Failed to generate PDF');
+      }
+      
+      const response = await axios.post('/api/send-email', {
+        type: 'report',
+        name,
+        email,
+        pdfBuffer: pdfBase64
+      });
+
+      if (response.data.success) {
+        setNotification({ type: 'success', message: 'Report sent successfully! Check your email.' });
+        setEmailSubmitted(true);
+        localStorage.setItem('reportEmailSubmitted', 'true');
+      } else {
+        throw new Error(response.data.message);
+      }
     } catch (error) {
-      console.error('Error saving email:', error);
+      console.error('Error sending report:', error);
+      setNotification({ 
+        type: 'error', 
+        message: 'Failed to send report. Please try again.' 
+      });
+    } finally {
+      setIsGeneratingPdf(false);
+      setIsSubmitting(false);
     }
   };
 
@@ -116,7 +147,19 @@ const ReportPage = () => {
           />
         </div>
       </div>
-      {!emailSubmitted && <EmailOverlay onSubmit={handleEmailSubmit} />}
+      {notification && (
+        <Toast
+          type={notification.type}
+          message={notification.message}
+          onClose={() => setNotification(null)}
+        />
+      )}
+      {!emailSubmitted && (
+        <EmailOverlay 
+          onSubmit={handleEmailSubmit} 
+          isSubmitting={isSubmitting}
+        />
+      )}
     </>
   );
 };

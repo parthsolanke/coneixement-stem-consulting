@@ -1,7 +1,7 @@
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 
-export const generatePDF = async (reportRef) => {
+export const generatePDF = async (reportRef, options = { download: false }) => {
   if (!reportRef) return;
 
   const pdf = new jsPDF({
@@ -104,5 +104,14 @@ export const generatePDF = async (reportRef) => {
     creationDate: new Date()
   });
 
-  pdf.save('STEM-Profile-Report.pdf');
+  if (options.download) {
+    // For direct download
+    pdf.save('stem-profile-report.pdf');
+    return;
+  }
+
+  // For email attachment
+  const pdfBuffer = pdf.output('arraybuffer');
+  const base64String = Buffer.from(pdfBuffer).toString('base64');
+  return base64String;
 };
