@@ -33,7 +33,11 @@ body {
     animation-delay: 4s;
   }
 
-  
+  .object-contain {
+    object-fit: contain;
+  }
 
-  
+
+
+
 

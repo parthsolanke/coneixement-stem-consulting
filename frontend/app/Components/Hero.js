@@ -52,6 +52,7 @@ export default function Hero() {
                   alt="Graduate"
                   width={350}
                   height={350}
+                  style={{ objectFit: 'contain' }}
                   className="rounded-2xl transform hover:scale-105 transition-all duration-300 drop-shadow-2xl"
                   priority
                 />
