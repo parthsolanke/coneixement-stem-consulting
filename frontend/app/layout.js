@@ -1,5 +1,6 @@
 import { Inter, Poppins } from "next/font/google";
 import "./globals.css";
+import { ClerkProvider } from '@clerk/nextjs'
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const poppins = Poppins({
@@ -21,6 +22,7 @@ export const viewport = {
 
 export default function RootLayout({ children }) {
   return (
+    <ClerkProvider>
     <html lang="en" className={`${inter.variable} ${poppins.variable}`}>
       <body className="min-h-screen bg-white text-gray-900 antialiased">
         <div className="flex min-h-screen flex-col">
@@ -28,5 +30,6 @@ export default function RootLayout({ children }) {
         </div>
       </body>
     </html>
+    </ClerkProvider>
   );
 }

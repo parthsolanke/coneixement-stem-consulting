@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { SignedOut, SignInButton, SignedIn, UserButton } from "@clerk/nextjs";
 
 
 const NavLink = ({ href, children, isHighlighted = false }) => (
@@ -115,6 +116,28 @@ export default function Navbar({ hidden }) {
             <NavLink href="#">Blogs</NavLink>
             <NavLink href="#">About Us</NavLink>
             <NavLink href="/contactus">Contact</NavLink>
+            <SignedOut>
+              <SignInButton>
+                <button className="relative py-2 px-4 text-lg font-semibold 
+                  text-white bg-gradient-to-r from-blue-600 to-indigo-600
+                  rounded-md hover:opacity-90 transition-all duration-300">
+                  Sign in
+                </button>
+              </SignInButton>
+            </SignedOut>
+            <SignedIn>
+              <div className="ml-2">
+                <UserButton 
+                  appearance={{
+                    elements: {
+                      avatarBox: "w-10 h-10 rounded-full border-2 border-blue-600",
+                      userButtonPopover: "bg-white/95 backdrop-blur-lg shadow-lg rounded-lg",
+                    }
+                  }}
+                  afterSignOutUrl="/"
+                />
+              </div>
+            </SignedIn>
           </div>
         </div>
 
@@ -132,6 +155,30 @@ export default function Navbar({ hidden }) {
             <NavLink href="#" className="block px-6 py-2">Blogs</NavLink>
             <NavLink href="#" className="block px-6 py-2">About Us</NavLink>
             <NavLink href="#" className="block px-6 py-2">Contact</NavLink>
+            <div className="px-6">
+              <SignedOut>
+                <SignInButton>
+                  <button className="w-full py-2 px-4 text-lg font-semibold 
+                    text-white bg-gradient-to-r from-blue-600 to-indigo-600
+                    rounded-md hover:opacity-90 transition-all duration-300">
+                    Sign in
+                  </button>
+                </SignInButton>
+              </SignedOut>
+              <SignedIn>
+                <div className="flex justify-center">
+                  <UserButton 
+                    appearance={{
+                      elements: {
+                        avatarBox: "w-10 h-10 rounded-full border-2 border-blue-600",
+                        userButtonPopover: "bg-white/95 backdrop-blur-lg shadow-lg rounded-lg",
+                      }
+                    }}
+                    afterSignOutUrl="/"
+                  />
+                </div>
+              </SignedIn>
+            </div>
           </div>
         </div>
       </div>
