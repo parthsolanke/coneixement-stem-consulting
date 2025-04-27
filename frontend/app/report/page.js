@@ -1,4 +1,6 @@
 "use client";
+import { useUser } from "@clerk/nextjs";
+import { useRouter } from "next/navigation";
 import { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import Navbar from "../Components/Navbar";
@@ -26,6 +28,7 @@ const analyzeTraits = (traitWeights) => {
 };
 
 const ReportPage = () => {
+  const router = useRouter();
   const reportRef = useRef(null);
   const [traitWeights, setTraitWeights] = useState(null);
   const [reportData, setReportData] = useState(null);
@@ -34,17 +37,38 @@ const ReportPage = () => {
   const [emailSubmitted, setEmailSubmitted] = useState(false);
   const [notification, setNotification] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isAuthInitialized, setIsAuthInitialized] = useState(false);
+  const { isSignedIn } = useUser();
 
   useEffect(() => {
-    const query = new URLSearchParams(window.location.search);
-    const data = query.get("data");
-
-    if (data) {
-      const parsedData = JSON.parse(decodeURIComponent(data));
-      setTraitWeights(parsedData);
-      fetchReport(parsedData);
+    if (isSignedIn !== undefined) {
+      setIsAuthInitialized(true);
     }
-  }, []);
+  }, [isSignedIn]);
+
+  useEffect(() => {
+    if (!isAuthInitialized) return;
+
+    try {
+      const storedData = localStorage.getItem('quizResults');
+      if (!storedData) {
+        router.push('/quiz');
+        return;
+      }
+
+      const parsedData = JSON.parse(storedData);
+      setTraitWeights(parsedData);
+      
+      if (isSignedIn) {
+        fetchReport(parsedData);
+      } else {
+        setIsLoading(false);
+      }
+    } catch (error) {
+      console.error('Error loading quiz results:', error);
+      router.push('/quiz');
+    }
+  }, [isSignedIn, isAuthInitialized, router]);
 
   const fetchReport = async (traits) => {
     const { strengths, weaknesses } = analyzeTraits(traits);
@@ -150,7 +174,37 @@ const ReportPage = () => {
     }
 };
 
-  if (!traitWeights || !reportData || isLoading) {
+  if (!isAuthInitialized || !traitWeights) {
+    return <LoadingState />;
+  }
+
+  if (!isSignedIn) {
+    return (
+      <>
+        <Navbar hidden={true} className="no-print" />
+        <div className="relative filter blur-md">
+          <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 p-3 md:p-6 pt-20 md:pt-24">
+            <div className="w-full max-w-4xl bg-white rounded-2xl p-8">
+              <div className="animate-pulse">
+                <div className="h-8 bg-gray-200 rounded w-3/4 mb-6" />
+                <div className="space-y-4">
+                  <div className="h-4 bg-gray-200 rounded w-full" />
+                  <div className="h-4 bg-gray-200 rounded w-5/6" />
+                  <div className="h-4 bg-gray-200 rounded w-4/6" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <EmailOverlay 
+          onSubmit={handleEmailSubmit} 
+          isSubmitting={isSubmitting}
+        />
+      </>
+    );
+  }
+
+  if (!reportData || isLoading) {
     return <LoadingState />;
   }
 
@@ -161,20 +215,30 @@ const ReportPage = () => {
       <PrintStyles />
       <Navbar hidden={!emailSubmitted} className="no-print" />
       <div className={`relative ${!emailSubmitted ? 'filter blur-md' : ''}`}>
-        <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 p-3 md:p-6 pt-20 md:pt-24">
-          <ReportTemplate 
-            reportRef={reportRef}
-            reportData={reportData}
-            traitWeights={traitWeights}
-            strengths={strengths}
-            weaknesses={weaknesses}
-          />
-          <DownloadButton 
-            onClick={handleGeneratePDF} 
-            isGenerating={isGeneratingPdf}
-            className="no-print fixed bottom-6 right-6 z-50 print:hidden" 
-          />
-        </div>
+        {isSignedIn && reportData ? (
+          <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 p-3 md:p-6 pt-20 md:pt-24">
+            <ReportTemplate 
+              reportRef={reportRef}
+              reportData={reportData}
+              traitWeights={traitWeights}
+              strengths={strengths}
+              weaknesses={weaknesses}
+            />
+            <DownloadButton 
+              onClick={handleGeneratePDF} 
+              isGenerating={isGeneratingPdf}
+              className="no-print fixed bottom-6 right-6 z-50 print:hidden" 
+            />
+          </div>
+        ) : (
+          <div className="flex items-center justify-center min-h-screen">
+            <div className="text-center p-8">
+              <h2 className="text-2xl font-bold text-gray-800 mb-4">
+                Sign in to View Your Report
+              </h2>
+            </div>
+          </div>
+        )}
       </div>
       {notification && (
         <Toast
