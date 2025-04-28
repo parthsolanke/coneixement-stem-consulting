@@ -1,4 +1,5 @@
 "use client";
+import posthog from 'posthog-js';
 import { useUser } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
 import { useEffect, useState, useRef } from "react";
@@ -74,12 +75,19 @@ const ReportPage = () => {
   const fetchReport = async (traits) => {
     const { strengths, weaknesses } = analyzeTraits(traits);
     try {
+      posthog.capture('report_generation_started', {
+        strengths: strengths.length,
+        weaknesses: weaknesses.length,
+        userId: user?.id
+      });
+
       // store quiz data first
       const quizId = await createQuizRecord({
         userId: user.id,
         quizType: 'personality',
         responses: traits
       });
+      
 
       // get report from API
       const { data } = await axios.post(
