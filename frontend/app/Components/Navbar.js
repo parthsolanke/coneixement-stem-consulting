@@ -1,8 +1,8 @@
 "use client"
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import Link from "next/link";
-import { SignedOut, SignInButton, SignedIn, UserButton } from "@clerk/nextjs";
+import { SignedOut, SignInButton, SignedIn, UserButton, useUser } from "@clerk/nextjs";
+import { upsertUser } from "@/server/queries";
 
 
 const NavLink = ({ href, children, isHighlighted = false }) => (
@@ -28,7 +28,18 @@ const NavLink = ({ href, children, isHighlighted = false }) => (
 export default function Navbar({ hidden }) {
   const [showNavbar, setShowNavbar] = useState(true);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { user } = useUser();
   let lastScrollY = 0;
+
+  useEffect(() => {
+    if (user) {
+      upsertUser({
+        id: user.id,
+        name: user.fullName || '',
+        email: user.primaryEmailAddress?.emailAddress || '',
+      });
+    }
+  }, [user]);
 
   useEffect(() => {
     const handleScroll = () => {

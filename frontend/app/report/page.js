@@ -12,6 +12,7 @@ import PrintStyles from './components/PrintStyles';
 import ReportTemplate from './components/ReportTemplate';
 import EmailOverlay from './components/EmailOverlay';
 import Toast from "../Components/Toast";
+import { upsertUser, createQuizRecord, createReportRecord } from "@/server/queries";
 
 ChartJS.register(RadialLinearScale, PointElement, LineElement, Filler, Tooltip, Legend, CategoryScale, LinearScale, BarElement);
 
@@ -30,6 +31,7 @@ const analyzeTraits = (traitWeights) => {
 const ReportPage = () => {
   const router = useRouter();
   const reportRef = useRef(null);
+  const { isSignedIn, user } = useUser();
   const [traitWeights, setTraitWeights] = useState(null);
   const [reportData, setReportData] = useState(null);
   const [isGeneratingPdf, setIsGeneratingPdf] = useState(false);
@@ -38,7 +40,6 @@ const ReportPage = () => {
   const [notification, setNotification] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isAuthInitialized, setIsAuthInitialized] = useState(false);
-  const { isSignedIn } = useUser();
 
   useEffect(() => {
     if (isSignedIn !== undefined) {
@@ -73,6 +74,14 @@ const ReportPage = () => {
   const fetchReport = async (traits) => {
     const { strengths, weaknesses } = analyzeTraits(traits);
     try {
+      // store quiz data first
+      const quizId = await createQuizRecord({
+        userId: user.id,
+        quizType: 'personality',
+        responses: traits
+      });
+
+      // get report from API
       const { data } = await axios.post(
         `${process.env.NEXT_PUBLIC_API_URL}/api/report/`,
         {
@@ -86,12 +95,23 @@ const ReportPage = () => {
           }
         }
       );
+
+      // store report data
+      await createReportRecord({
+        userId: user.id,
+        quizId: quizId,
+        reportData: data.report
+      });
+
       setReportData(data.report);
       setIsLoading(false);
     } catch (error) {
-      console.error('Error fetching report:', error.response?.data || error.message);
+      console.error('Error handling report:', error.response?.data || error.message);
       setIsLoading(false);
-      // add error handling UI here
+      setNotification({ 
+        type: 'error', 
+        message: 'Failed to process report data. Please try again.' 
+      });
     }
   };
 
@@ -173,6 +193,16 @@ const ReportPage = () => {
         setIsSubmitting(false);
     }
 };
+
+  useEffect(() => {
+    if (user) {
+      upsertUser({
+        id: user.id,
+        name: user.fullName || '',
+        email: user.primaryEmailAddress?.emailAddress || '',
+      });
+    }
+  }, [user]);
 
   if (!isAuthInitialized || !traitWeights) {
     return <LoadingState />;
