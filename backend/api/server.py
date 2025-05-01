@@ -4,6 +4,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from api.middleware.error_handlers import event_loop_error_handler
 from api.quiz.routes import app as quiz_app
 from api.report.routes import app as report_app
+from api.utils.config import ALLOWED_ORIGINS
 
 app = FastAPI(
     title="Career Guidance API",
@@ -13,7 +14,7 @@ app = FastAPI(
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=ALLOWED_ORIGINS,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

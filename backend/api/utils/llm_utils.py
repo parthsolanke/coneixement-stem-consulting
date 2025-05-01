@@ -157,65 +157,60 @@ def parse_json_response(text: str) -> dict:
     logger.error("All JSON parsing attempts failed")
     raise ValueError(f"Could not parse JSON response. Original text:\n{text}")
 
-async def generate_quiz_with_context(query: str) -> str:
-    max_retries = 5
-    base_delay = 1
+async def call_with_retries(api_call, *args, max_retries=5, base_delay=1, **kwargs):
+    delay = base_delay
 
-    for attempt in range(max_retries):
+    for attempt in range(1, max_retries + 1):
         try:
-            response = await quiz_chat_session.send_message_async(query)
-            return response.text
+            response = await api_call(*args, **kwargs)
+            return response
         except ResourceExhausted as e:
-            print(f"Rate limit exceeded. Retrying in {base_delay} seconds... (Attempt {attempt+1}/{max_retries})")
-            await asyncio.sleep(base_delay)
-            base_delay *= 2
+            logger.warning(f"Rate limit hit. Retrying in {delay}s... (Attempt {attempt}/{max_retries})")
+            await asyncio.sleep(delay)
+            delay *= 2
         except Exception as e:
-            print(f"An error occurred: {e}")
-            return ""
-    
-    print("Max retries reached. Could not generate quiz.")
-    return ""
-
-async def generate_report_with_context(query: str) -> str:
-    max_retries = 5
-    base_delay = 1  # init 1-second delay
-
-    for attempt in range(max_retries):
-        try:
-            new_session = report_model.start_chat(history=REPORT_CONTEXT)
-            response = await new_session.send_message_async(query)
-            response_text = response.text
-
-            try:
-                json_response = parse_json_response(response_text)
-                return json.dumps(json_response)
-            except Exception as e:
-                logger.error("Failed to parse LLM response", exc_info=True)
-                logger.error(f"Problematic response text:\n{response_text}")
-                raise
-
-        except ResourceExhausted as e:
-            logger.warning(f"Rate limit exceeded. Retrying in {base_delay} seconds... (Attempt {attempt+1}/{max_retries})")
-            await asyncio.sleep(base_delay)
-            base_delay *= 2  # backoff: 1s -> 2s -> 4s -> 8s
-        except Exception as e:
-            logger.error("Error in generate_report_with_context", exc_info=True)
+            logger.error(f"Unexpected error in API call: {e}", exc_info=True)
             raise
 
-    raise Exception("Max retries reached. Failed to generate report due to API rate limits.")
+    raise Exception("Max retries reached. API request failed due to rate limits.")
+
+async def generate_quiz_with_context(query: str) -> str:
+    try:
+        response = await call_with_retries(quiz_chat_session.send_message_async, query)
+        return response.text
+    except Exception as e:
+        logger.error(f"Failed to generate quiz: {e}", exc_info=True)
+        return ""
+
+async def generate_report_with_context(query: str) -> str:
+    try:
+        response = await call_with_retries(report_chat_session.send_message_async, query)
+        response_text = response.text
+
+        try:
+            json_response = parse_json_response(response_text)
+            return json.dumps(json_response)
+        except Exception as e:
+            logger.error("Failed to parse LLM response", exc_info=True)
+            logger.error(f"Problematic response text:\n{response_text}")
+            raise
+
+    except Exception as e:
+        logger.error("Error in generate_report_with_context", exc_info=True)
+        raise
 
 async def generate_quiz_without_context(query: str) -> str:
     try:
-        response = await quiz_model.generate_content_async(query)
+        response = await call_with_retries(quiz_model.generate_content_async, query)
         return response.text
     except Exception as e:
-        print(f"An error occurred: {e}")
+        logger.error(f"Failed to generate quiz without context: {e}", exc_info=True)
         return ""
 
 async def generate_report_without_context(query: str) -> str:
     try:
-        response = await report_model.generate_content_async(query)
+        response = await call_with_retries(report_model.generate_content_async, query)
         return response.text
     except Exception as e:
-        print(f"An error occurred: {e}")
+        logger.error(f"Failed to generate report without context: {e}", exc_info=True)
         return ""

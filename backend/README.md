@@ -13,10 +13,7 @@ docker build -t stem-api .
 
 ### Running the Container
 ```bash
-docker run -p 8000:8000 \
-  -e GEMINI_API_KEY=your-api-key \
-  -e MODEL=gemini-1.5-flash \
-  stem-api
+docker run -p 8000:8000 --env-file .env stem-api
 ```
 
 ### Checking Container Status
