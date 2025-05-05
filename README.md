@@ -1,84 +1,28 @@
 # coneixement-STEM-consulting
 A comprehensive tool to guide students in grades 8-12 towards suitable STEM career paths. Features include personality quizzes, career recommendations, and detailed result reports tailored to STEM fields.
 
-### Project Structure
+## TODO:
+### UI/UX Improvements
+- [ ] Optimize hero section spacing (reduce top and bottom gaps)
+- [ ] Restructure hero layout (image left, text right)
+- [ ] Create new concise and memorable tagline
+- [ ] Remove "free" mentions from homepage
+- [ ] Add disclaimer section at page bottom
+- [ ] Replace "class" terminology with "grade"
 
-```
-coneixement-STEM-consulting/
-├── .github/
-│   └── ISSUE_TEMPLATE/
-│       └── feature_request.md  
-├── docs/
-│   ├── requirements.md
-│   ├── contributing.md
-│   └── code_of_conduct.md
-├── backend/
-│   ├── __init__.py
-│   ├── main.py
-│   ├── quiz/
-│   │   ├── __init__.py
-│   │   └──  # quiz modules
-│   ├── report/
-│   │   ├── __init__.py
-│   │   └── generate_report.py
-│   └── utils/
-│       ├── __init__.py
-│       └── # utility modules
-├── frontend/
-│   ├── public/
-│   │   └── # public files
-│   ├── src/
-│   │   ├── components/
-│   │   │   └── # React components
-│   │   ├── styles/
-│   │   │   └── # CSS/SCSS files
-│   │   ├── App.js
-│   │   ├── index.js
-│   │   └── # other frontend modules
-│   ├── package.json
-│   └── # other configuration files
-├── tests/
-│   ├── __init__.py
-│   ├── # personality quiz test modules
-│   ├── test_report.py
-│   └──  # utility test modules
-├── .gitignore
-├── README.md
-├── requirements.txt
-└── setup.py
-```
+### Authentication
+- [ ] Implement email/OTP-based authentication
+- [ ] Remove traditional login system
 
-## Getting Started
-
-### Prerequisites
-
-- Python 3.9+
-- pip (Python package installer)
-
-### Installation
-
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/parthsolanke/coneixement-STEM-consulting.git
-   cd coneixement-STEM-consulting
-   ```
-
-2. Install the required packages:
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-3. Run the application:
-   ```bash
-   python src/main.py
-   ```
-
-### Running Tests
-
-To run tests, use:
-```bash
-pytest
-```
+### Features
+- [ ] Backend error handling and logging
+- [ ] Request queueuing and rate limiting
+- [ ] Add user profile section with report history
+- [ ] Implement PCMB subject selection checkboxes
+- [ ] Add co-curricular section pre-quiz
+- [ ] Include vocational subjects/courses list
+- [ ] Add major/minor/extra-curricular activities section
+- [ ] Remove core engineering branch suggestions
 
 ## Contributing
 

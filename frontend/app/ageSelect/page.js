@@ -6,6 +6,7 @@ import Navbar from "../Components/Navbar";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import Image from 'next/image';
+import posthog from 'posthog-js';
 
 const QuizLoadingIndicator = () => {
   const [progress, setProgress] = useState(0);
@@ -199,6 +200,12 @@ export default function Page() {
   const handleQuizSubmit = async (formData) => {
     setQuizLoading(true);
     try {
+      posthog.capture('quiz_generation_started', {
+        age: formData.age,
+        extraCurricular: formData.extraCurricular,
+        subjects: formData.subjects
+      });
+      
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_API_URL}/api/quiz/`,
         {

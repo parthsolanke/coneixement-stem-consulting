@@ -159,9 +159,8 @@ const QuizPage = () => {
       if (currentQuestionIndex === quizData.questions.length - 1) {
         const maxScores = calculateMaxScorePerTrait(quizData.questions);
         const percentages = calculateTraitPercentages(newWeights, maxScores);
-        router.push(
-          `/report?data=${encodeURIComponent(JSON.stringify(percentages))}`
-        );
+        localStorage.setItem('quizResults', JSON.stringify(percentages));
+        router.push('/report');
       }
 
       return newWeights;
