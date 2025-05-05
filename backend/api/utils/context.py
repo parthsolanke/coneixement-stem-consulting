@@ -158,7 +158,7 @@ REPORT_CONTEXT = [
                         "paths": [{
                             "field": "Computer Science",
                             "alignment": "Matches analytical strengths",
-                            "potential_outcomes": ["Software Engineer", "Data Scientist", "Systems Architect"]
+                            "potential_outcomes": ["Software Engineer", "Data Scientit", "Systems Architect"]
                         }]
                     },
                     "career_exploration": {
